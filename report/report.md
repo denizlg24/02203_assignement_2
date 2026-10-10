@@ -26,12 +26,18 @@ from where we can calculate the Sobel operator value for $h$, $q$, $r$, and $s$.
 
 This process can then be repeated horizontally across the row. At each iteration, the last two pixels from each of the three current words are retained, and the next word from each row is loaded. Since each new word contributes four new pixels, each subsequent iteration allows four new output pixels to be computed.
 
-The loop continues until the final word of the current row is reached. Since each row contains (88) buffer words, the horizontal word index ranges from (0) to (87). Special handling is required at the left and right image boundaries, since pixels in columns (0) and (351) do not have a complete (3\times3) neighborhood.
+The loop continues until the final word of the current row is reached. Since each row contains $(88)$ buffer words, the horizontal word index ranges from $(0)$ to $(87)$. Special handling is required at the left and right image boundaries, since pixels in columns $(0)$ and $(351)$ do not have a complete $(3\times3)$ neighborhood.
 
-After finishing one output row, the processing window is moved down by one row and the same procedure is repeated. For an output row (r), the three input rows required are (r-1), (r), and (r+1). Therefore, if the current horizontal word index is (k), the three buffer addresses are
+After finishing one output row, the processing window is moved down by one row and the same procedure is repeated. For an output row $(r)$, the three input rows required are $(r-1)$, $(r)$, and $(r+1)$. Therefore, if the current horizontal word index is $(k)$, the three buffer addresses are
 
 $
 (r-1)\cdot88+k,\qquad r\cdot88+k,\qquad (r+1)\cdot88+k.
 $
 
 The valid Sobel center rows are therefore (1) through (286), while rows (0) and (287) must be handled as image boundaries.
+
+We can have states = ```{LOAD_INIT, COMPUTE_INIT, LOAD, COMPUTE, COMPUTE_FINAL, NEXT_ROW}```, for example.
+
+Then an FSM could look like:
+
+![fsm](./figures/high-level-fsm.png)
