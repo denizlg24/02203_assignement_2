@@ -1,0 +1,326 @@
+<svg width="666pt" height="1464pt" viewBox="0.00 0.00 666.00 1464.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 1459.8)">
+<title>sobel_fsm</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-1459.8 661.58,-1459.8 661.58,4 -4,4"/>
+<!-- IDLE -->
+<g id="node1" class="node">
+<title>IDLE</title>
+<path fill="none" stroke="black" d="M580.82,-1407.2C580.82,-1407.2 535.18,-1407.2 535.18,-1407.2 529.18,-1407.2 523.18,-1401.2 523.18,-1395.2 523.18,-1395.2 523.18,-1363.2 523.18,-1363.2 523.18,-1357.2 529.18,-1351.2 535.18,-1351.2 535.18,-1351.2 580.82,-1351.2 580.82,-1351.2 586.82,-1351.2 592.82,-1357.2 592.82,-1363.2 592.82,-1363.2 592.82,-1395.2 592.82,-1395.2 592.82,-1401.2 586.82,-1407.2 580.82,-1407.2"/>
+<text xml:space="preserve" text-anchor="middle" x="558" y="-1394.2" font-family="Helvetica,sans-Serif" font-size="10.00">IDLE</text>
+<text xml:space="preserve" text-anchor="middle" x="558" y="-1370.2" font-family="Helvetica,sans-Serif" font-size="10.00">mem_rd = 0</text>
+<text xml:space="preserve" text-anchor="middle" x="558" y="-1358.2" font-family="Helvetica,sans-Serif" font-size="10.00">out_we = 0</text>
+</g>
+<!-- IDLE&#45;&gt;IDLE -->
+<g id="edge2" class="edge">
+<title>IDLE-&gt;IDLE</title>
+<path fill="none" stroke="black" d="M593.06,-1388.44C609.93,-1389.58 624.82,-1386.5 624.82,-1379.2 624.82,-1373.61 616.09,-1370.5 604.43,-1369.86"/>
+<polygon fill="black" stroke="black" points="604.54,-1366.35 594.58,-1369.95 604.61,-1373.35 604.54,-1366.35"/>
+<text xml:space="preserve" text-anchor="middle" x="641.2" y="-1376.5" font-family="Helvetica,sans-Serif" font-size="9.00">start = 0</text>
+</g>
+<!-- ROW_INIT -->
+<g id="node2" class="node">
+<title>ROW_INIT</title>
+<path fill="none" stroke="black" d="M543.7,-1274.8C543.7,-1274.8 468.3,-1274.8 468.3,-1274.8 462.3,-1274.8 456.3,-1268.8 456.3,-1262.8 456.3,-1262.8 456.3,-1206.8 456.3,-1206.8 456.3,-1200.8 462.3,-1194.8 468.3,-1194.8 468.3,-1194.8 543.7,-1194.8 543.7,-1194.8 549.7,-1194.8 555.7,-1200.8 555.7,-1206.8 555.7,-1206.8 555.7,-1262.8 555.7,-1262.8 555.7,-1268.8 549.7,-1274.8 543.7,-1274.8"/>
+<text xml:space="preserve" text-anchor="middle" x="506" y="-1261.8" font-family="Helvetica,sans-Serif" font-size="10.00">ROW_INIT</text>
+<text xml:space="preserve" text-anchor="middle" x="506" y="-1237.8" font-family="Helvetica,sans-Serif" font-size="10.00">k &lt;= 0</text>
+<text xml:space="preserve" text-anchor="middle" x="506" y="-1225.8" font-family="Helvetica,sans-Serif" font-size="10.00">phase &lt;= 0</text>
+<text xml:space="preserve" text-anchor="middle" x="506" y="-1213.8" font-family="Helvetica,sans-Serif" font-size="10.00">byte &lt;= 1</text>
+<text xml:space="preserve" text-anchor="middle" x="506" y="-1201.8" font-family="Helvetica,sans-Serif" font-size="10.00">out_word[7:0] &lt;= 0</text>
+</g>
+<!-- IDLE&#45;&gt;ROW_INIT -->
+<g id="edge3" class="edge">
+<title>IDLE-&gt;ROW_INIT</title>
+<path fill="none" stroke="black" d="M523.49,-1350.7C517.62,-1344.3 512.33,-1337.04 508.94,-1329.2 503.19,-1315.93 501.09,-1300.57 500.79,-1286.19"/>
+<polygon fill="black" stroke="black" points="504.29,-1286.47 500.89,-1276.44 497.29,-1286.4 504.29,-1286.47"/>
+<text xml:space="preserve" text-anchor="middle" x="544.47" y="-1321.1" font-family="Helvetica,sans-Serif" font-size="9.00">start = 1</text>
+<text xml:space="preserve" text-anchor="middle" x="544.47" y="-1310.3" font-family="Helvetica,sans-Serif" font-size="9.00">r &lt;= 1</text>
+<text xml:space="preserve" text-anchor="middle" x="544.47" y="-1299.5" font-family="Helvetica,sans-Serif" font-size="9.00">out_addr_q &lt;= 88</text>
+</g>
+<!-- RD_TOP -->
+<g id="node3" class="node">
+<title>RD_TOP</title>
+<path fill="none" stroke="black" d="M283.85,-1149.8C283.85,-1149.8 210.15,-1149.8 210.15,-1149.8 204.15,-1149.8 198.15,-1143.8 198.15,-1137.8 198.15,-1137.8 198.15,-1105.8 198.15,-1105.8 198.15,-1099.8 204.15,-1093.8 210.15,-1093.8 210.15,-1093.8 283.85,-1093.8 283.85,-1093.8 289.85,-1093.8 295.85,-1099.8 295.85,-1105.8 295.85,-1105.8 295.85,-1137.8 295.85,-1137.8 295.85,-1143.8 289.85,-1149.8 283.85,-1149.8"/>
+<text xml:space="preserve" text-anchor="middle" x="247" y="-1136.8" font-family="Helvetica,sans-Serif" font-size="10.00">RD_TOP</text>
+<text xml:space="preserve" text-anchor="middle" x="247" y="-1112.8" font-family="Helvetica,sans-Serif" font-size="10.00">mem_rd = 1</text>
+<text xml:space="preserve" text-anchor="middle" x="247" y="-1100.8" font-family="Helvetica,sans-Serif" font-size="10.00">addr = (r-1)*88 + k</text>
+</g>
+<!-- ROW_INIT&#45;&gt;RD_TOP -->
+<g id="edge4" class="edge">
+<title>ROW_INIT-&gt;RD_TOP</title>
+<path fill="none" stroke="black" d="M456.06,-1212.4C413.47,-1194.14 352.12,-1167.85 306.89,-1148.47"/>
+<polygon fill="black" stroke="black" points="308.31,-1145.27 297.74,-1144.54 305.55,-1151.7 308.31,-1145.27"/>
+</g>
+<!-- CAP_TOP -->
+<g id="node4" class="node">
+<title>CAP_TOP</title>
+<path fill="none" stroke="black" d="M295.81,-1048.8C295.81,-1048.8 198.19,-1048.8 198.19,-1048.8 192.19,-1048.8 186.19,-1042.8 186.19,-1036.8 186.19,-1036.8 186.19,-1016.8 186.19,-1016.8 186.19,-1010.8 192.19,-1004.8 198.19,-1004.8 198.19,-1004.8 295.81,-1004.8 295.81,-1004.8 301.81,-1004.8 307.81,-1010.8 307.81,-1016.8 307.81,-1016.8 307.81,-1036.8 307.81,-1036.8 307.81,-1042.8 301.81,-1048.8 295.81,-1048.8"/>
+<text xml:space="preserve" text-anchor="middle" x="247" y="-1035.8" font-family="Helvetica,sans-Serif" font-size="10.00">CAP_TOP</text>
+<text xml:space="preserve" text-anchor="middle" x="247" y="-1011.8" font-family="Helvetica,sans-Serif" font-size="10.00">top_word &lt;= mem_data</text>
+</g>
+<!-- RD_TOP&#45;&gt;CAP_TOP -->
+<g id="edge5" class="edge">
+<title>RD_TOP-&gt;CAP_TOP</title>
+<path fill="none" stroke="black" d="M247,-1093.4C247,-1083.12 247,-1071.34 247,-1060.62"/>
+<polygon fill="black" stroke="black" points="250.5,-1060.62 247,-1050.62 243.5,-1060.62 250.5,-1060.62"/>
+</g>
+<!-- RD_MID -->
+<g id="node5" class="node">
+<title>RD_MID</title>
+<path fill="none" stroke="black" d="M276.08,-959.8C276.08,-959.8 217.92,-959.8 217.92,-959.8 211.92,-959.8 205.92,-953.8 205.92,-947.8 205.92,-947.8 205.92,-915.8 205.92,-915.8 205.92,-909.8 211.92,-903.8 217.92,-903.8 217.92,-903.8 276.08,-903.8 276.08,-903.8 282.08,-903.8 288.08,-909.8 288.08,-915.8 288.08,-915.8 288.08,-947.8 288.08,-947.8 288.08,-953.8 282.08,-959.8 276.08,-959.8"/>
+<text xml:space="preserve" text-anchor="middle" x="247" y="-946.8" font-family="Helvetica,sans-Serif" font-size="10.00">RD_MID</text>
+<text xml:space="preserve" text-anchor="middle" x="247" y="-922.8" font-family="Helvetica,sans-Serif" font-size="10.00">mem_rd = 1</text>
+<text xml:space="preserve" text-anchor="middle" x="247" y="-910.8" font-family="Helvetica,sans-Serif" font-size="10.00">addr = r*88 + k</text>
+</g>
+<!-- CAP_TOP&#45;&gt;RD_MID -->
+<g id="edge6" class="edge">
+<title>CAP_TOP-&gt;RD_MID</title>
+<path fill="none" stroke="black" d="M247,-1004.7C247,-994.91 247,-982.96 247,-971.64"/>
+<polygon fill="black" stroke="black" points="250.5,-971.69 247,-961.69 243.5,-971.69 250.5,-971.69"/>
+</g>
+<!-- CAP_MID -->
+<g id="node6" class="node">
+<title>CAP_MID</title>
+<path fill="none" stroke="black" d="M296.92,-858.8C296.92,-858.8 197.08,-858.8 197.08,-858.8 191.08,-858.8 185.08,-852.8 185.08,-846.8 185.08,-846.8 185.08,-826.8 185.08,-826.8 185.08,-820.8 191.08,-814.8 197.08,-814.8 197.08,-814.8 296.92,-814.8 296.92,-814.8 302.92,-814.8 308.92,-820.8 308.92,-826.8 308.92,-826.8 308.92,-846.8 308.92,-846.8 308.92,-852.8 302.92,-858.8 296.92,-858.8"/>
+<text xml:space="preserve" text-anchor="middle" x="247" y="-845.8" font-family="Helvetica,sans-Serif" font-size="10.00">CAP_MID</text>
+<text xml:space="preserve" text-anchor="middle" x="247" y="-821.8" font-family="Helvetica,sans-Serif" font-size="10.00">mid_word &lt;= mem_data</text>
+</g>
+<!-- RD_MID&#45;&gt;CAP_MID -->
+<g id="edge7" class="edge">
+<title>RD_MID-&gt;CAP_MID</title>
+<path fill="none" stroke="black" d="M247,-903.4C247,-893.12 247,-881.34 247,-870.62"/>
+<polygon fill="black" stroke="black" points="250.5,-870.62 247,-860.62 243.5,-870.62 250.5,-870.62"/>
+</g>
+<!-- RD_BOT -->
+<g id="node7" class="node">
+<title>RD_BOT</title>
+<path fill="none" stroke="black" d="M285.11,-769.8C285.11,-769.8 208.89,-769.8 208.89,-769.8 202.89,-769.8 196.89,-763.8 196.89,-757.8 196.89,-757.8 196.89,-725.8 196.89,-725.8 196.89,-719.8 202.89,-713.8 208.89,-713.8 208.89,-713.8 285.11,-713.8 285.11,-713.8 291.11,-713.8 297.11,-719.8 297.11,-725.8 297.11,-725.8 297.11,-757.8 297.11,-757.8 297.11,-763.8 291.11,-769.8 285.11,-769.8"/>
+<text xml:space="preserve" text-anchor="middle" x="247" y="-756.8" font-family="Helvetica,sans-Serif" font-size="10.00">RD_BOT</text>
+<text xml:space="preserve" text-anchor="middle" x="247" y="-732.8" font-family="Helvetica,sans-Serif" font-size="10.00">mem_rd = 1</text>
+<text xml:space="preserve" text-anchor="middle" x="247" y="-720.8" font-family="Helvetica,sans-Serif" font-size="10.00">addr = (r+1)*88 + k</text>
+</g>
+<!-- CAP_MID&#45;&gt;RD_BOT -->
+<g id="edge8" class="edge">
+<title>CAP_MID-&gt;RD_BOT</title>
+<path fill="none" stroke="black" d="M247,-814.7C247,-804.91 247,-792.96 247,-781.64"/>
+<polygon fill="black" stroke="black" points="250.5,-781.69 247,-771.69 243.5,-781.69 250.5,-781.69"/>
+</g>
+<!-- CAP_BOT -->
+<g id="node8" class="node">
+<title>CAP_BOT</title>
+<path fill="none" stroke="black" d="M295.81,-659C295.81,-659 198.19,-659 198.19,-659 192.19,-659 186.19,-653 186.19,-647 186.19,-647 186.19,-627 186.19,-627 186.19,-621 192.19,-615 198.19,-615 198.19,-615 295.81,-615 295.81,-615 301.81,-615 307.81,-621 307.81,-627 307.81,-627 307.81,-647 307.81,-647 307.81,-653 301.81,-659 295.81,-659"/>
+<text xml:space="preserve" text-anchor="middle" x="247" y="-646" font-family="Helvetica,sans-Serif" font-size="10.00">CAP_BOT</text>
+<text xml:space="preserve" text-anchor="middle" x="247" y="-622" font-family="Helvetica,sans-Serif" font-size="10.00">bot_word &lt;= mem_data</text>
+</g>
+<!-- RD_BOT&#45;&gt;CAP_BOT -->
+<g id="edge9" class="edge">
+<title>RD_BOT-&gt;CAP_BOT</title>
+<path fill="none" stroke="black" d="M247,-713.52C247,-700.36 247,-684.48 247,-670.68"/>
+<polygon fill="black" stroke="black" points="250.5,-670.72 247,-660.72 243.5,-670.72 250.5,-670.72"/>
+</g>
+<!-- UPDATE_INIT -->
+<g id="node9" class="node">
+<title>UPDATE_INIT</title>
+<path fill="none" stroke="black" d="M406.53,-560.2C406.53,-560.2 279.47,-560.2 279.47,-560.2 273.47,-560.2 267.47,-554.2 267.47,-548.2 267.47,-548.2 267.47,-492.2 267.47,-492.2 267.47,-486.2 273.47,-480.2 279.47,-480.2 279.47,-480.2 406.53,-480.2 406.53,-480.2 412.53,-480.2 418.53,-486.2 418.53,-492.2 418.53,-492.2 418.53,-548.2 418.53,-548.2 418.53,-554.2 412.53,-560.2 406.53,-560.2"/>
+<text xml:space="preserve" text-anchor="middle" x="343" y="-547.2" font-family="Helvetica,sans-Serif" font-size="10.00">UPDATE_INIT</text>
+<text xml:space="preserve" text-anchor="middle" x="343" y="-523.2" font-family="Helvetica,sans-Serif" font-size="10.00">window_top[0:3] &lt;= top_word</text>
+<text xml:space="preserve" text-anchor="middle" x="343" y="-511.2" font-family="Helvetica,sans-Serif" font-size="10.00">window_mid[0:3] &lt;= mid_word</text>
+<text xml:space="preserve" text-anchor="middle" x="343" y="-499.2" font-family="Helvetica,sans-Serif" font-size="10.00">window_bot[0:3] &lt;= bot_word</text>
+<text xml:space="preserve" text-anchor="middle" x="343" y="-487.2" font-family="Helvetica,sans-Serif" font-size="10.00">phase &lt;= 0</text>
+</g>
+<!-- CAP_BOT&#45;&gt;UPDATE_INIT -->
+<g id="edge10" class="edge">
+<title>CAP_BOT-&gt;UPDATE_INIT</title>
+<path fill="none" stroke="black" d="M264.83,-614.68C275.54,-601.87 289.61,-585.04 302.86,-569.2"/>
+<polygon fill="black" stroke="black" points="305.41,-571.61 309.14,-561.69 300.04,-567.12 305.41,-571.61"/>
+<text xml:space="preserve" text-anchor="middle" x="299.13" y="-584.9" font-family="Helvetica,sans-Serif" font-size="9.00">k = 0</text>
+</g>
+<!-- UPDATE_WINDOW -->
+<g id="node10" class="node">
+<title>UPDATE_WINDOW</title>
+<path fill="none" stroke="black" d="M223.75,-554.2C223.75,-554.2 132.25,-554.2 132.25,-554.2 126.25,-554.2 120.25,-548.2 120.25,-542.2 120.25,-542.2 120.25,-498.2 120.25,-498.2 120.25,-492.2 126.25,-486.2 132.25,-486.2 132.25,-486.2 223.75,-486.2 223.75,-486.2 229.75,-486.2 235.75,-492.2 235.75,-498.2 235.75,-498.2 235.75,-542.2 235.75,-542.2 235.75,-548.2 229.75,-554.2 223.75,-554.2"/>
+<text xml:space="preserve" text-anchor="middle" x="178" y="-541.2" font-family="Helvetica,sans-Serif" font-size="10.00">UPDATE_WINDOW</text>
+<text xml:space="preserve" text-anchor="middle" x="178" y="-517.2" font-family="Helvetica,sans-Serif" font-size="10.00">keep previous cols 4,5</text>
+<text xml:space="preserve" text-anchor="middle" x="178" y="-505.2" font-family="Helvetica,sans-Serif" font-size="10.00">append new 4 pixels</text>
+<text xml:space="preserve" text-anchor="middle" x="178" y="-493.2" font-family="Helvetica,sans-Serif" font-size="10.00">phase &lt;= 0</text>
+</g>
+<!-- CAP_BOT&#45;&gt;UPDATE_WINDOW -->
+<g id="edge11" class="edge">
+<title>CAP_BOT-&gt;UPDATE_WINDOW</title>
+<path fill="none" stroke="black" d="M234.18,-614.68C225.71,-600.58 214.31,-581.61 203.99,-564.44"/>
+<polygon fill="black" stroke="black" points="207,-562.66 198.85,-555.89 201,-566.26 207,-562.66"/>
+<text xml:space="preserve" text-anchor="middle" x="231.84" y="-584.9" font-family="Helvetica,sans-Serif" font-size="9.00">k != 0</text>
+</g>
+<!-- COMPUTE -->
+<g id="node11" class="node">
+<title>COMPUTE</title>
+<path fill="none" stroke="black" d="M298.38,-435.2C298.38,-435.2 169.62,-435.2 169.62,-435.2 163.62,-435.2 157.62,-429.2 157.62,-423.2 157.62,-423.2 157.62,-379.2 157.62,-379.2 157.62,-373.2 163.62,-367.2 169.62,-367.2 169.62,-367.2 298.38,-367.2 298.38,-367.2 304.38,-367.2 310.38,-373.2 310.38,-379.2 310.38,-379.2 310.38,-423.2 310.38,-423.2 310.38,-429.2 304.38,-435.2 298.38,-435.2"/>
+<text xml:space="preserve" text-anchor="middle" x="234" y="-422.2" font-family="Helvetica,sans-Serif" font-size="10.00">COMPUTE</text>
+<text xml:space="preserve" text-anchor="middle" x="234" y="-398.2" font-family="Helvetica,sans-Serif" font-size="10.00">mux_select = phase</text>
+<text xml:space="preserve" text-anchor="middle" x="234" y="-386.2" font-family="Helvetica,sans-Serif" font-size="10.00">sobel_en = 1</text>
+<text xml:space="preserve" text-anchor="middle" x="234" y="-374.2" font-family="Helvetica,sans-Serif" font-size="10.00">out_word[byte] &lt;= sobel_result</text>
+</g>
+<!-- UPDATE_INIT&#45;&gt;COMPUTE -->
+<g id="edge12" class="edge">
+<title>UPDATE_INIT-&gt;COMPUTE</title>
+<path fill="none" stroke="black" d="M306.4,-479.92C295.55,-468.27 283.64,-455.48 272.66,-443.7"/>
+<polygon fill="black" stroke="black" points="275.27,-441.37 265.9,-436.44 270.15,-446.14 275.27,-441.37"/>
+</g>
+<!-- UPDATE_WINDOW&#45;&gt;COMPUTE -->
+<g id="edge13" class="edge">
+<title>UPDATE_WINDOW-&gt;COMPUTE</title>
+<path fill="none" stroke="black" d="M193.9,-485.99C199.87,-473.51 206.75,-459.14 213.1,-445.86"/>
+<polygon fill="black" stroke="black" points="216.25,-447.39 217.41,-436.86 209.93,-444.37 216.25,-447.39"/>
+</g>
+<!-- WRITE_WORD -->
+<g id="node12" class="node">
+<title>WRITE_WORD</title>
+<path fill="none" stroke="black" d="M451.7,-301.6C451.7,-301.6 324.3,-301.6 324.3,-301.6 318.3,-301.6 312.3,-295.6 312.3,-289.6 312.3,-289.6 312.3,-221.6 312.3,-221.6 312.3,-215.6 318.3,-209.6 324.3,-209.6 324.3,-209.6 451.7,-209.6 451.7,-209.6 457.7,-209.6 463.7,-215.6 463.7,-221.6 463.7,-221.6 463.7,-289.6 463.7,-289.6 463.7,-295.6 457.7,-301.6 451.7,-301.6"/>
+<text xml:space="preserve" text-anchor="middle" x="388" y="-288.6" font-family="Helvetica,sans-Serif" font-size="10.00">WRITE_WORD</text>
+<text xml:space="preserve" text-anchor="middle" x="388" y="-264.6" font-family="Helvetica,sans-Serif" font-size="10.00">out_we = 1</text>
+<text xml:space="preserve" text-anchor="middle" x="388" y="-252.6" font-family="Helvetica,sans-Serif" font-size="10.00">out_data = out_word</text>
+<text xml:space="preserve" text-anchor="middle" x="388" y="-240.6" font-family="Helvetica,sans-Serif" font-size="10.00">out_addr = out_addr_q</text>
+<text xml:space="preserve" text-anchor="middle" x="388" y="-228.6" font-family="Helvetica,sans-Serif" font-size="10.00">out_addr_q &lt;= out_addr_q + 1</text>
+<text xml:space="preserve" text-anchor="middle" x="388" y="-216.6" font-family="Helvetica,sans-Serif" font-size="10.00">byte &lt;= 0</text>
+</g>
+<!-- COMPUTE&#45;&gt;WRITE_WORD -->
+<g id="edge14" class="edge">
+<title>COMPUTE-&gt;WRITE_WORD</title>
+<path fill="none" stroke="black" d="M310.64,-374.71C325.75,-367.03 340.47,-357.32 352,-345.2 360.85,-335.89 367.64,-324.12 372.8,-312.23"/>
+<polygon fill="black" stroke="black" points="375.95,-313.79 376.38,-303.21 369.44,-311.22 375.95,-313.79"/>
+<text xml:space="preserve" text-anchor="middle" x="383.13" y="-331.7" font-family="Helvetica,sans-Serif" font-size="9.00">byte = 3</text>
+</g>
+<!-- ADVANCE_PHASE -->
+<g id="node13" class="node">
+<title>ADVANCE_PHASE</title>
+<path fill="none" stroke="black" d="M268.34,-283.6C268.34,-283.6 187.66,-283.6 187.66,-283.6 181.66,-283.6 175.66,-277.6 175.66,-271.6 175.66,-271.6 175.66,-239.6 175.66,-239.6 175.66,-233.6 181.66,-227.6 187.66,-227.6 187.66,-227.6 268.34,-227.6 268.34,-227.6 274.34,-227.6 280.34,-233.6 280.34,-239.6 280.34,-239.6 280.34,-271.6 280.34,-271.6 280.34,-277.6 274.34,-283.6 268.34,-283.6"/>
+<text xml:space="preserve" text-anchor="middle" x="228" y="-270.6" font-family="Helvetica,sans-Serif" font-size="10.00">ADVANCE_PHASE</text>
+<text xml:space="preserve" text-anchor="middle" x="228" y="-246.6" font-family="Helvetica,sans-Serif" font-size="10.00">phase &lt;= phase + 1</text>
+<text xml:space="preserve" text-anchor="middle" x="228" y="-234.6" font-family="Helvetica,sans-Serif" font-size="10.00">byte &lt;= byte + 1</text>
+</g>
+<!-- COMPUTE&#45;&gt;ADVANCE_PHASE -->
+<g id="edge15" class="edge">
+<title>COMPUTE-&gt;ADVANCE_PHASE</title>
+<path fill="none" stroke="black" d="M157.25,-368.91C148.58,-362.33 140.93,-354.49 135.47,-345.2 130.61,-336.92 131.11,-332.15 135.47,-323.6 140.1,-314.54 155.88,-301.97 173.14,-290.17"/>
+<polygon fill="black" stroke="black" points="174.61,-293.4 180.98,-284.94 170.72,-287.58 174.61,-293.4"/>
+<text xml:space="preserve" text-anchor="middle" x="172.24" y="-337.1" font-family="Helvetica,sans-Serif" font-size="9.00">byte != 3</text>
+<text xml:space="preserve" text-anchor="middle" x="172.24" y="-326.3" font-family="Helvetica,sans-Serif" font-size="9.00">AND more phases</text>
+</g>
+<!-- ADVANCE_WORD -->
+<g id="node14" class="node">
+<title>ADVANCE_WORD</title>
+<path fill="none" stroke="black" d="M165.78,-148.8C165.78,-148.8 88.22,-148.8 88.22,-148.8 82.22,-148.8 76.22,-142.8 76.22,-136.8 76.22,-136.8 76.22,-116.8 76.22,-116.8 76.22,-110.8 82.22,-104.8 88.22,-104.8 88.22,-104.8 165.78,-104.8 165.78,-104.8 171.78,-104.8 177.78,-110.8 177.78,-116.8 177.78,-116.8 177.78,-136.8 177.78,-136.8 177.78,-142.8 171.78,-148.8 165.78,-148.8"/>
+<text xml:space="preserve" text-anchor="middle" x="127" y="-135.8" font-family="Helvetica,sans-Serif" font-size="10.00">ADVANCE_WORD</text>
+<text xml:space="preserve" text-anchor="middle" x="127" y="-111.8" font-family="Helvetica,sans-Serif" font-size="10.00">k &lt;= k + 1</text>
+</g>
+<!-- COMPUTE&#45;&gt;ADVANCE_WORD -->
+<g id="edge16" class="edge">
+<title>COMPUTE-&gt;ADVANCE_WORD</title>
+<path fill="none" stroke="black" d="M157.3,-368.92C145.4,-362.14 133.82,-354.24 124,-345.2 107.31,-329.84 103.59,-323.44 97.47,-301.6 86.43,-262.23 90.42,-249.88 97.47,-209.6 100.46,-192.49 106.73,-174.23 112.73,-159.32"/>
+<polygon fill="black" stroke="black" points="115.78,-161.08 116.41,-150.51 109.32,-158.38 115.78,-161.08"/>
+<text xml:space="preserve" text-anchor="middle" x="128.74" y="-258.3" font-family="Helvetica,sans-Serif" font-size="9.00">byte != 3</text>
+<text xml:space="preserve" text-anchor="middle" x="128.74" y="-247.5" font-family="Helvetica,sans-Serif" font-size="9.00">AND last phase</text>
+</g>
+<!-- WRITE_WORD&#45;&gt;COMPUTE -->
+<g id="edge18" class="edge">
+<title>WRITE_WORD-&gt;COMPUTE</title>
+<path fill="none" stroke="black" d="M311.91,-297.81C300.78,-305.57 289.96,-314.23 280.69,-323.6 271.02,-333.37 262.47,-345.52 255.41,-357.23"/>
+<polygon fill="black" stroke="black" points="252.55,-355.18 250.6,-365.6 258.62,-358.67 252.55,-355.18"/>
+<text xml:space="preserve" text-anchor="middle" x="312.35" y="-331.7" font-family="Helvetica,sans-Serif" font-size="9.00">group_done = 0</text>
+</g>
+<!-- WRITE_WORD&#45;&gt;ADVANCE_WORD -->
+<g id="edge19" class="edge">
+<title>WRITE_WORD-&gt;ADVANCE_WORD</title>
+<path fill="none" stroke="black" d="M311.83,-216.98C306.49,-214.45 301.17,-211.97 296,-209.6 273.45,-199.26 267.17,-198.11 244.69,-187.6 222.49,-177.21 198.3,-165.07 177.66,-154.45"/>
+<polygon fill="black" stroke="black" points="179.36,-151.39 168.87,-149.91 176.15,-157.61 179.36,-151.39"/>
+<text xml:space="preserve" text-anchor="middle" x="276.35" y="-179.5" font-family="Helvetica,sans-Serif" font-size="9.00">group_done = 1</text>
+</g>
+<!-- NEXT_ROW -->
+<g id="node16" class="node">
+<title>NEXT_ROW</title>
+<path fill="none" stroke="black" d="M537.33,-154.8C537.33,-154.8 488.67,-154.8 488.67,-154.8 482.67,-154.8 476.67,-148.8 476.67,-142.8 476.67,-142.8 476.67,-110.8 476.67,-110.8 476.67,-104.8 482.67,-98.8 488.67,-98.8 488.67,-98.8 537.33,-98.8 537.33,-98.8 543.33,-98.8 549.33,-104.8 549.33,-110.8 549.33,-110.8 549.33,-142.8 549.33,-142.8 549.33,-148.8 543.33,-154.8 537.33,-154.8"/>
+<text xml:space="preserve" text-anchor="middle" x="513" y="-141.8" font-family="Helvetica,sans-Serif" font-size="10.00">NEXT_ROW</text>
+<text xml:space="preserve" text-anchor="middle" x="513" y="-117.8" font-family="Helvetica,sans-Serif" font-size="10.00">r &lt;= r + 1</text>
+<text xml:space="preserve" text-anchor="middle" x="513" y="-105.8" font-family="Helvetica,sans-Serif" font-size="10.00">k &lt;= 0</text>
+</g>
+<!-- WRITE_WORD&#45;&gt;NEXT_ROW -->
+<g id="edge23" class="edge">
+<title>WRITE_WORD-&gt;NEXT_ROW</title>
+<path fill="none" stroke="black" d="M409.39,-209.15C416.03,-197.8 424.04,-186.19 433.21,-176.8 442.88,-166.89 454.94,-158.16 466.74,-150.9"/>
+<polygon fill="black" stroke="black" points="468.36,-154.01 475.22,-145.94 464.83,-147.97 468.36,-154.01"/>
+<text xml:space="preserve" text-anchor="middle" x="460.6" y="-179.5" font-family="Helvetica,sans-Serif" font-size="9.00">row_done = 1</text>
+</g>
+<!-- ADVANCE_PHASE&#45;&gt;COMPUTE -->
+<g id="edge17" class="edge">
+<title>ADVANCE_PHASE-&gt;COMPUTE</title>
+<path fill="none" stroke="black" d="M229.14,-283.95C229.99,-304.14 231.15,-332.05 232.13,-355.47"/>
+<polygon fill="black" stroke="black" points="228.63,-355.54 232.55,-365.38 235.62,-355.24 228.63,-355.54"/>
+</g>
+<!-- ADVANCE_WORD&#45;&gt;RD_TOP -->
+<g id="edge20" class="edge">
+<title>ADVANCE_WORD-&gt;RD_TOP</title>
+<path fill="none" stroke="black" d="M82.58,-149.3C45.96,-170.48 0,-206.62 0,-254.6 0,-1027.8 0,-1027.8 0,-1027.8 0,-1067.62 113.88,-1096.24 186.99,-1110.51"/>
+<polygon fill="black" stroke="black" points="185.94,-1113.88 196.42,-1112.31 187.25,-1107 185.94,-1113.88"/>
+<text xml:space="preserve" text-anchor="middle" x="12.38" y="-683.7" font-family="Helvetica,sans-Serif" font-size="9.00">k &lt; 87</text>
+</g>
+<!-- PAD_RIGHT -->
+<g id="node15" class="node">
+<title>PAD_RIGHT</title>
+<path fill="none" stroke="black" d="M353.26,-44C353.26,-44 266.74,-44 266.74,-44 260.74,-44 254.74,-38 254.74,-32 254.74,-32 254.74,-12 254.74,-12 254.74,-6 260.74,0 266.74,0 266.74,0 353.26,0 353.26,0 359.26,0 365.26,-6 365.26,-12 365.26,-12 365.26,-32 365.26,-32 365.26,-38 359.26,-44 353.26,-44"/>
+<text xml:space="preserve" text-anchor="middle" x="310" y="-31" font-family="Helvetica,sans-Serif" font-size="10.00">PAD_RIGHT</text>
+<text xml:space="preserve" text-anchor="middle" x="310" y="-7" font-family="Helvetica,sans-Serif" font-size="10.00">out_word[31:24] &lt;= 0</text>
+</g>
+<!-- ADVANCE_WORD&#45;&gt;PAD_RIGHT -->
+<g id="edge21" class="edge">
+<title>ADVANCE_WORD-&gt;PAD_RIGHT</title>
+<path fill="none" stroke="black" d="M164.92,-104.5C193.04,-88.7 231.59,-67.05 261.89,-50.03"/>
+<polygon fill="black" stroke="black" points="263.49,-53.14 270.5,-45.19 260.06,-47.04 263.49,-53.14"/>
+<text xml:space="preserve" text-anchor="middle" x="241.84" y="-68.7" font-family="Helvetica,sans-Serif" font-size="9.00">k = 87</text>
+</g>
+<!-- PAD_RIGHT&#45;&gt;WRITE_WORD -->
+<g id="edge22" class="edge">
+<title>PAD_RIGHT-&gt;WRITE_WORD</title>
+<path fill="none" stroke="black" d="M317.19,-44.34C328.86,-78.99 352.3,-148.6 369.01,-198.23"/>
+<polygon fill="black" stroke="black" points="365.69,-199.33 372.2,-207.69 372.32,-197.09 365.69,-199.33"/>
+<text xml:space="preserve" text-anchor="middle" x="387.21" y="-124.1" font-family="Helvetica,sans-Serif" font-size="9.00">final output word</text>
+</g>
+<!-- NEXT_ROW&#45;&gt;ROW_INIT -->
+<g id="edge24" class="edge">
+<title>NEXT_ROW-&gt;ROW_INIT</title>
+<path fill="none" stroke="black" d="M513,-155.01C513,-180.68 513,-220.26 513,-254.6 513,-1122.8 513,-1122.8 513,-1122.8 513,-1142.55 511.88,-1164.23 510.54,-1183.16"/>
+<polygon fill="black" stroke="black" points="507.06,-1182.8 509.8,-1193.03 514.04,-1183.32 507.06,-1182.8"/>
+<text xml:space="preserve" text-anchor="middle" x="527.14" y="-739.1" font-family="Helvetica,sans-Serif" font-size="9.00">r &lt; 286</text>
+</g>
+<!-- DONE -->
+<g id="node17" class="node">
+<title>DONE</title>
+<path fill="none" stroke="black" d="M574.6,-44C574.6,-44 543.4,-44 543.4,-44 537.4,-44 531.4,-38 531.4,-32 531.4,-32 531.4,-12 531.4,-12 531.4,-6 537.4,0 543.4,0 543.4,0 574.6,0 574.6,0 580.6,0 586.6,-6 586.6,-12 586.6,-12 586.6,-32 586.6,-32 586.6,-38 580.6,-44 574.6,-44"/>
+<text xml:space="preserve" text-anchor="middle" x="559" y="-31" font-family="Helvetica,sans-Serif" font-size="10.00">DONE</text>
+<text xml:space="preserve" text-anchor="middle" x="559" y="-7" font-family="Helvetica,sans-Serif" font-size="10.00">done = 1</text>
+</g>
+<!-- NEXT_ROW&#45;&gt;DONE -->
+<g id="edge25" class="edge">
+<title>NEXT_ROW-&gt;DONE</title>
+<path fill="none" stroke="black" d="M525.21,-98.52C531.27,-84.96 538.63,-68.51 544.94,-54.43"/>
+<polygon fill="black" stroke="black" points="548,-56.15 548.89,-45.59 541.61,-53.29 548,-56.15"/>
+<text xml:space="preserve" text-anchor="middle" x="552.89" y="-68.7" font-family="Helvetica,sans-Serif" font-size="9.00">r = 286</text>
+</g>
+<!-- DONE&#45;&gt;IDLE -->
+<g id="edge26" class="edge">
+<title>DONE-&gt;IDLE</title>
+<path fill="none" stroke="black" d="M574.83,-44.23C588.14,-64.2 605,-95.49 605,-125.8 605,-1235.8 605,-1235.8 605,-1235.8 605,-1278.35 598.77,-1289.3 584,-1329.2 582.58,-1333.04 580.91,-1336.95 579.12,-1340.81"/>
+<polygon fill="black" stroke="black" points="576.15,-1338.94 574.85,-1349.45 582.42,-1342.04 576.15,-1338.94"/>
+<text xml:space="preserve" text-anchor="middle" x="621.38" y="-739.1" font-family="Helvetica,sans-Serif" font-size="9.00">start = 0</text>
+</g>
+<!-- start -->
+<g id="node18" class="node">
+<title>start</title>
+<ellipse fill="black" stroke="black" cx="558" cy="-1454" rx="1.8" ry="1.8"/>
+</g>
+<!-- start&#45;&gt;IDLE -->
+<g id="edge1" class="edge">
+<title>start-&gt;IDLE</title>
+<path fill="none" stroke="black" d="M558,-1451.74C558,-1447.52 558,-1433.4 558,-1418.8"/>
+<polygon fill="black" stroke="black" points="561.5,-1419.21 558,-1409.21 554.5,-1419.21 561.5,-1419.21"/>
+</g>
+</g>
+</svg>

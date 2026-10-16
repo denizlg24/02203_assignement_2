@@ -17,3 +17,5 @@ Bender.lock
 
 src/tb/out_images/*
 fpga/serial_interface/.venv
+
+***.DS_Store
