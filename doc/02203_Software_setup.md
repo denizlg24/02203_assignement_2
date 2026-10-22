@@ -88,9 +88,9 @@ Questa Starter Edition is a free HDL simulator used in this lab.
    - **Linux:** run `ip link`; the wired interface is `en*` / `eth*`, wireless is
      `wl*`.
 4. You will receive a `.dat` license file by email.
-5. Point Questa at it via the `SALT_LICENSE_FILE` environment variable (adjust path to your saved location):
-   - **Windows:** `setx SALT_LICENSE_FILE "C:\licenses\questa.dat"` (or use System Properties -> Environment Variables)
-   - **Linux:** `export SALT_LICENSE_FILE=$HOME/licenses/questa.dat` in `~/.bashrc`
+5. Point Questa at it via the `SALT_LICENSE_SERVER` environment variable (adjust path to your saved location):
+   - **Windows:** `setx SALT_LICENSE_SERVER "C:\licenses\questa.dat"` (or use System Properties -> Environment Variables)
+   - **Linux:** `export SALT_LICENSE_SERVER=$HOME/licenses/questa.dat` in `~/.bashrc`
 
 #### Verify
 
@@ -238,19 +238,19 @@ On Windows we use MSYS2 instead of WSL for the debug tools. WSL can only reach U
 
 1. Download and run the installer from [msys2.org](https://www.msys2.org)
    (`msys2-x86_64-*.exe`); accept the default install path `C:\msys64`.
-2. Open **MSYS2 MINGW64** from the Start menu (the blue icon - *not* "MSYS2 MSYS"
-   or "UCRT64"). All commands below run in this shell.
+2. Open **MSYS2 UCRT64** from the Start menu (*not* "MSYS2 MSYS" or "MSYS2 MINGW64"). All commands below run in this shell.
+
 3. Update the package database and core packages:
    ```bash
    pacman -Syu
    ```
-   If it asks to close the terminal, do so, reopen **MSYS2 MINGW64**, and run
+   If it asks to close the terminal, do so, reopen **MSYS2 UCRT64**, and run
    `pacman -Syu` again to finish.
 
-#### Step 2 - Install OpenOCD and GDB (inside MSYS2 MINGW64)
+#### Step 2 - Install OpenOCD and GDB (inside MSYS2 UCRT64)
 
 ```bash
-pacman -S mingw-w64-x86_64-openocd mingw-w64-x86_64-gdb-multiarch
+pacman -Ss mingw-w64-ucrt-x86_64-openocd mingw-w64-ucrt-x86_64-gdb-multiarch
 ```
 
 Verify:

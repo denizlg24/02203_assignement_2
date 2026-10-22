@@ -112,6 +112,10 @@ The steps below exercise the tools you installed: Bender (fetches the hardware d
 
 For this task, inspect the provided `src/rtl/Student_area_0.sv`, `src/rtl/pixel_acc.sv`, `src/tb/tb_student_ss.sv`, and `sw/pixel_inversion/pixel_inversion.c`. You should not need to edit them.
 
+A VHDL version of the accelerator is provided in [pixel_acc_vhd.vhd](../src/rtl/pixel_acc_vhd.vhd). If you prefer VHDL, implement your accelerator there instead of in `pixel_acc.sv`; the rest of the project stays in SystemVerilog, connected through `pixel_acc_vhd_wrapper.sv`.
+
+> **VHDL note:** add `ACC_LANG=vhdl` to every `make` command (e.g. `make test_ss ACC_LANG=vhdl`), or set it once per terminal: `export ACC_LANG=vhdl` (Linux), `$env:ACC_LANG="vhdl"` (PowerShell). If you forget, the SystemVerilog example runs instead and the simulation still passes. Check the sim log (`build/logs/sim`) for `Loading work.pixel_acc_vhd(rtl)`. In GUI runs, save your waveform layout to `sim/wave_ss_vhdl.do`.`
+
 Run all commands from the project root, `02203-Didactic-SoC/`.
 
 > **Windows:** replace `make` with `make -f Makefile.win` for every command in this guide.
@@ -342,14 +346,18 @@ make load_elf TEST=pixel_inversion
 
 #### Windows
 
-All commands run in the **MSYS2 MINGW64** terminal (see setup guide section 7 for installing `openocd` / `gdb-multiarch`).
+All commands run in the **MSYS2 UCRT64** terminal (see setup guide section 7 for installing `openocd` / `gdb-multiarch`).
+MSYS2 uses its own filesystem layout, so you need to locate your project before running any commands. You can either:
+- Access your Windows drives directly: they are mounted under `/c`, `/d`, etc. For example, `cd /c/<path-to-project>/02203-Didactic-SoC`.
+- Copy the relevant files (for the commands below) into your MSYS2 home directory using File Explorer.
 
 1. **Switch the FTDI driver with Zadig** (after flashing the bitstream): *Options -> List All Devices*, select **Digilent USB Device (Interface 0)**, set driver to **WinUSB**, *Install Driver*.
+
 2. **Start OpenOCD** (leave this terminal open):
    ```bash
    openocd -f utils/openocd-didactic-nexys.cfg
    ```
-   Wait for `Ready for Remote Connections`.
+
 3. **Load the firmware and attach GDB** (second MSYS2 terminal):
    ```bash
    gdb-multiarch ../build/fpga/sw/pixel_inversion.elf -x utils/connect-and-load.gdb
@@ -359,21 +367,16 @@ All commands run in the **MSYS2 MINGW64** terminal (see setup guide section 7 fo
 
 #### Running the firmware from GDB
 
-`connect-and-load.gdb` only connects and writes IMEM - it does not start execution. At the `(gdb)` prompt:
+`connect-and-load.gdb` only connects and writes IMEM - it does not start execution. To release the CPU from halt - at the `(gdb)` prompt do:
 
 ```bash
-monitor reset
-monitor halt
-set $pc=0x01000080
 continue
 # Use Ctrl+C to halt target
 ```
 
-`0x01000080` is the firmware entry point (IMEM base `0x01000000` + `crt0` offset).
+> If the debug session freezes or becomes a responsive you can do a hard reset with the board's reset switch (rightmost slide switch, SW0 / pin `J15`). This also starts the newly uploaded firmware, as long as it was loaded in the same power cycle.
 
-> A hard reset with the board's reset switch (rightmost slide switch, SW0 / pin `J15`) also starts the newly uploaded firmware, as long as it was loaded in the same power cycle. This can be more reliable than reset through JTAG.
-
-#### GDB reference
+### GDB reference
 
 **Breakpoints.** `step` and `next` hang the core - use breakpoints instead:
 
@@ -384,9 +387,38 @@ delete breakpoints
 continue
 ```
 
-> **Warning:** always `delete breakpoints` before `continue`. If any breakpoint remains set when you resume, the core becomes unresponsive.
+> **Warning:** always `delete breakpoints` before `continue`. If any breakpoint remains set when you resume, the core becomes unresponsive. 
 
-**Other useful commands:** `Ctrl+C` halts a running target; `monitor halt` / `monitor resume` control it via OpenOCD; `info registers` dumps the register file.
+**Registers**
+
+```bash
+info registers                       # general registers
+info registers pc                    # one register
+info all-registers                   # includes CSRs if the target exposes them
+p/x $a0                              # print in hex
+set $a0 = 5                          # write a register
+```
+
+**Memory**
+
+```bash
+x/8xw 0x20000000                     # dump 8 words in hex at address <>
+x/4i $pc                             # disassemble 4 instructions at pc
+set {unsigned int}0x40000000 = 0x1   # write a word
+monitor mdw 0x40000000 4             # OpenOCD read: 4 words
+monitor mww 0x40000000 0x1           # OpenOCD write: one word
+```
+
+**Layout options**
+
+```bash
+layout src                           # source + command window
+layout asm                           # disassembly + command window
+layout split                         # source + disassembly + command
+layout regs                          # registers + source (or asm) + command
+layout next / layout prev            # cycle through layouts
+tui disable                          # Return to command-window-only view
+```
 
 **Success criteria:** OpenOCD connects to the configured FPGA, GDB attaches to the RISC-V core, and you can load the firmware and halt/resume execution. Please note that this task is optional and is not required to complete the assignment.
 
