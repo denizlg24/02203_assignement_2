@@ -1,0 +1,169 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1700" height="854" viewBox="0 46 1700 854">
+<title>pixel_acc top-level block diagram</title>
+<style>
+.m{font-family:'JetBrains Mono','Menlo','Consolas',monospace}
+.s{font-family:'Helvetica Neue','Helvetica','Arial',sans-serif}
+.bus{stroke:#111;stroke-width:2.4;fill:none;stroke-linejoin:miter}
+.ctl{stroke:#333;stroke-width:1.1;fill:none}
+.thin{stroke:#111;stroke-width:1;fill:none}
+.sl{stroke:#111;stroke-width:1.2}
+.bar{stroke:#111;stroke-width:5;stroke-linecap:butt}
+.mod{fill:#f2f2f2;stroke:#111;stroke-width:1.6}
+.sub{fill:#fff;stroke:#555;stroke-width:0.9}
+.ff{fill:#fff;stroke:#111;stroke-width:1.3}
+.mux{fill:#fff;stroke:#111;stroke-width:1.2}
+.gate{fill:#fff;stroke:#111;stroke-width:1.2}
+.sup{fill:#e4e4e4;stroke:#333;stroke-width:1.4;stroke-dasharray:6 3}
+.grp{fill:#fafafa;stroke:#111;stroke-width:1.6}
+.acc{fill:none;stroke:#111;stroke-width:2.2}
+.wrap{fill:none;stroke:#777;stroke-width:1.2;stroke-dasharray:10 5}
+.leg{fill:#fff;stroke:#999;stroke-width:0.8}
+</style>
+<defs>
+<marker id="ac" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="7" markerHeight="7" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#333"/></marker>
+<marker id="ab" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#111"/></marker>
+</defs>
+<rect x="0" y="46" width="1700" height="900" fill="#fff"/>
+<rect x="8" y="52" width="1684" height="840" class="wrap"/>
+<text x="18" y="68" class="s" font-size="11" text-anchor="start" fill="#555" font-weight="700">Student_area_0  (supplied wrapper)</text>
+<rect x="250" y="78" width="1200" height="800" class="acc" rx="0"/>
+<text x="262" y="96" class="s" font-size="13" text-anchor="start" fill="#111" font-weight="700">pixel_acc</text>
+<rect x="30" y="100" width="170" height="140" class="sup" rx="0"/>
+<text x="115" y="128" class="s" font-size="12" text-anchor="middle" fill="#111" font-weight="700">APB CSR</text>
+<text x="115" y="143" class="s" font-size="9" text-anchor="middle" fill="#555">(supplied)</text>
+<text x="195" y="153" class="m" font-size="9" text-anchor="end" fill="#111">acc_start</text>
+<text x="195" y="213" class="m" font-size="9" text-anchor="end" fill="#111">acc_finish</text>
+<rect x="30" y="380" width="170" height="230" class="sup" rx="0"/>
+<text x="115" y="520" class="s" font-size="14" text-anchor="middle" fill="#111" font-weight="700">ibuf</text>
+<text x="115" y="536" class="m" font-size="9" text-anchor="middle" fill="#111">BRAM 25 344 × 32 b</text>
+<text x="115" y="550" class="s" font-size="9" text-anchor="middle" fill="#555">(supplied)</text>
+<text x="195" y="423" class="m" font-size="9" text-anchor="end" fill="#111">rd_addr</text>
+<text x="195" y="463" class="m" font-size="9" text-anchor="end" fill="#111">rd_en</text>
+<text x="195" y="593" class="m" font-size="9" text-anchor="end" fill="#111">rd_data</text>
+<rect x="1500" y="380" width="170" height="230" class="sup" rx="0"/>
+<text x="1585" y="430" class="s" font-size="14" text-anchor="middle" fill="#111" font-weight="700">obuf</text>
+<text x="1585" y="446" class="m" font-size="9" text-anchor="middle" fill="#111">BRAM 25 344 × 32 b</text>
+<text x="1585" y="460" class="s" font-size="9" text-anchor="middle" fill="#555">(supplied)</text>
+<text x="1505" y="473" class="m" font-size="9" text-anchor="start" fill="#111">wr_en</text>
+<text x="1505" y="523" class="m" font-size="9" text-anchor="start" fill="#111">wr_addr</text>
+<text x="1505" y="573" class="m" font-size="9" text-anchor="start" fill="#111">wr_data</text>
+<rect x="330" y="110" width="320" height="150" class="mod" rx="0"/>
+<text x="490.0" y="183.0" class="s" font-size="13" text-anchor="middle" fill="#111" font-weight="700">controller</text>
+<text x="490.0" y="199.0" class="m" font-size="9" text-anchor="middle" fill="#111">u_ctrl</text>
+<text x="335" y="153" class="m" font-size="9" text-anchor="start" fill="#111">start</text>
+<text x="335" y="213" class="m" font-size="9" text-anchor="start" fill="#111">finish</text>
+<text x="390" y="254" class="m" font-size="9" text-anchor="middle" fill="#111">load_en</text>
+<text x="470" y="254" class="m" font-size="9" text-anchor="middle" fill="#111">row_sel[1:0]</text>
+<text x="560" y="254" class="m" font-size="9" text-anchor="middle" fill="#111">init</text>
+<polyline points="200,150 330,150" class="ctl" marker-end="url(#ac)"/>
+<polyline points="330,210 200,210" class="ctl" marker-end="url(#ac)"/>
+<rect x="330" y="380" width="320" height="370" class="mod" rx="0"/>
+<text x="490.0" y="563.0" class="s" font-size="13" text-anchor="middle" fill="#111" font-weight="700">loader</text>
+<text x="490.0" y="579.0" class="m" font-size="9" text-anchor="middle" fill="#111">u_ld</text>
+<polyline points="390,260 390,380" class="ctl" marker-end="url(#ac)"/>
+<text x="390" y="393" class="m" font-size="9" text-anchor="middle" fill="#111">load_en</text>
+<polyline points="470,260 470,380" class="bus" marker-end="url(#ab)"/>
+<line x1="464" y1="324" x2="476" y2="316" class="sl"/>
+<text x="478" y="323" class="m" font-size="8" text-anchor="start" fill="#111">2</text>
+<text x="470" y="393" class="m" font-size="9" text-anchor="middle" fill="#111">row_sel</text>
+<polyline points="560,260 560,380" class="ctl" marker-end="url(#ac)"/>
+<text x="560" y="393" class="m" font-size="9" text-anchor="middle" fill="#111">init</text>
+<text x="335" y="423" class="m" font-size="9" text-anchor="start" fill="#111">ibuf_rd_addr</text>
+<text x="335" y="463" class="m" font-size="9" text-anchor="start" fill="#111">ibuf_rd_en</text>
+<text x="335" y="593" class="m" font-size="9" text-anchor="start" fill="#111">ibuf_rd_data</text>
+<polyline points="330,420 200,420" class="bus" marker-end="url(#ab)"/>
+<line x1="221" y1="426" x2="229" y2="414" class="sl"/>
+<text x="227" y="412" class="m" font-size="8" text-anchor="middle" fill="#111">15</text>
+<polyline points="330,460 200,460" class="ctl" marker-end="url(#ac)"/>
+<polyline points="200,590 330,590" class="bus" marker-end="url(#ab)"/>
+<line x1="221" y1="596" x2="229" y2="584" class="sl"/>
+<text x="227" y="582" class="m" font-size="8" text-anchor="middle" fill="#111">32</text>
+<rect x="820" y="392" width="180" height="76" class="mod" rx="0"/>
+<text x="910.0" y="428.0" class="s" font-size="13" text-anchor="middle" fill="#111" font-weight="700">sobel_0</text>
+<text x="910.0" y="444.0" class="m" font-size="9" text-anchor="middle" fill="#111">u_sobel_0  (cols 0..2)</text>
+<text x="825" y="455" class="m" font-size="9" text-anchor="start" fill="#111">win</text>
+<text x="995" y="433" class="m" font-size="9" text-anchor="end" fill="#111">pixel</text>
+<text x="645" y="455" class="m" font-size="9" text-anchor="end" fill="#111">win_0</text>
+<polyline points="650,452 820,452" class="bus" marker-end="url(#ab)"/>
+<line x1="696" y1="458" x2="704" y2="446" class="sl"/>
+<text x="702" y="444" class="m" font-size="8" text-anchor="middle" fill="#111">72</text>
+<rect x="820" y="482" width="180" height="76" class="mod" rx="0"/>
+<text x="910.0" y="518.0" class="s" font-size="13" text-anchor="middle" fill="#111" font-weight="700">sobel_1</text>
+<text x="910.0" y="534.0" class="m" font-size="9" text-anchor="middle" fill="#111">u_sobel_1  (cols 1..3)</text>
+<text x="825" y="545" class="m" font-size="9" text-anchor="start" fill="#111">win</text>
+<text x="995" y="523" class="m" font-size="9" text-anchor="end" fill="#111">pixel</text>
+<text x="645" y="545" class="m" font-size="9" text-anchor="end" fill="#111">win_1</text>
+<polyline points="650,542 820,542" class="bus" marker-end="url(#ab)"/>
+<line x1="696" y1="548" x2="704" y2="536" class="sl"/>
+<text x="702" y="534" class="m" font-size="8" text-anchor="middle" fill="#111">72</text>
+<rect x="820" y="572" width="180" height="76" class="mod" rx="0"/>
+<text x="910.0" y="608.0" class="s" font-size="13" text-anchor="middle" fill="#111" font-weight="700">sobel_2</text>
+<text x="910.0" y="624.0" class="m" font-size="9" text-anchor="middle" fill="#111">u_sobel_2  (cols 2..4)</text>
+<text x="825" y="635" class="m" font-size="9" text-anchor="start" fill="#111">win</text>
+<text x="995" y="613" class="m" font-size="9" text-anchor="end" fill="#111">pixel</text>
+<text x="645" y="635" class="m" font-size="9" text-anchor="end" fill="#111">win_2</text>
+<polyline points="650,632 820,632" class="bus" marker-end="url(#ab)"/>
+<line x1="696" y1="638" x2="704" y2="626" class="sl"/>
+<text x="702" y="624" class="m" font-size="8" text-anchor="middle" fill="#111">72</text>
+<rect x="820" y="662" width="180" height="76" class="mod" rx="0"/>
+<text x="910.0" y="698.0" class="s" font-size="13" text-anchor="middle" fill="#111" font-weight="700">sobel_3</text>
+<text x="910.0" y="714.0" class="m" font-size="9" text-anchor="middle" fill="#111">u_sobel_3  (cols 3..5)</text>
+<text x="825" y="725" class="m" font-size="9" text-anchor="start" fill="#111">win</text>
+<text x="995" y="703" class="m" font-size="9" text-anchor="end" fill="#111">pixel</text>
+<text x="645" y="725" class="m" font-size="9" text-anchor="end" fill="#111">win_3</text>
+<polyline points="650,722 820,722" class="bus" marker-end="url(#ab)"/>
+<line x1="696" y1="728" x2="704" y2="716" class="sl"/>
+<text x="702" y="714" class="m" font-size="8" text-anchor="middle" fill="#111">72</text>
+<rect x="1200" y="380" width="180" height="340" class="mod" rx="0"/>
+<text x="1290.0" y="548.0" class="s" font-size="13" text-anchor="middle" fill="#111" font-weight="700">writer</text>
+<text x="1290.0" y="564.0" class="m" font-size="9" text-anchor="middle" fill="#111">u_wr</text>
+<polyline points="1000,430 1200,430" class="bus" marker-end="url(#ab)"/>
+<line x1="1156" y1="436" x2="1164" y2="424" class="sl"/>
+<text x="1162" y="422" class="m" font-size="8" text-anchor="middle" fill="#111">8</text>
+<text x="1205" y="433" class="m" font-size="9" text-anchor="start" fill="#111">pixel_0</text>
+<polyline points="1000,520 1200,520" class="bus" marker-end="url(#ab)"/>
+<line x1="1156" y1="526" x2="1164" y2="514" class="sl"/>
+<text x="1162" y="512" class="m" font-size="8" text-anchor="middle" fill="#111">8</text>
+<text x="1205" y="523" class="m" font-size="9" text-anchor="start" fill="#111">pixel_1</text>
+<polyline points="1000,610 1200,610" class="bus" marker-end="url(#ab)"/>
+<line x1="1156" y1="616" x2="1164" y2="604" class="sl"/>
+<text x="1162" y="602" class="m" font-size="8" text-anchor="middle" fill="#111">8</text>
+<text x="1205" y="613" class="m" font-size="9" text-anchor="start" fill="#111">pixel_2</text>
+<polyline points="1000,700 1200,700" class="bus" marker-end="url(#ab)"/>
+<line x1="1156" y1="706" x2="1164" y2="694" class="sl"/>
+<text x="1162" y="692" class="m" font-size="8" text-anchor="middle" fill="#111">8</text>
+<text x="1205" y="703" class="m" font-size="9" text-anchor="start" fill="#111">pixel_3</text>
+<text x="645" y="133" class="m" font-size="9" text-anchor="end" fill="#111">write</text>
+<polyline points="650,130 1360,130 1360,380" class="ctl" marker-end="url(#ac)"/>
+<text x="1363" y="386" class="m" font-size="9" text-anchor="end" fill="#111" transform="rotate(-90 1363 386)">write</text>
+<text x="645" y="153" class="m" font-size="9" text-anchor="end" fill="#111">first</text>
+<polyline points="650,150 1330,150 1330,380" class="ctl" marker-end="url(#ac)"/>
+<text x="1333" y="386" class="m" font-size="9" text-anchor="end" fill="#111" transform="rotate(-90 1333 386)">first</text>
+<text x="645" y="173" class="m" font-size="9" text-anchor="end" fill="#111">flush</text>
+<polyline points="650,170 1300,170 1300,380" class="ctl" marker-end="url(#ac)"/>
+<text x="1303" y="386" class="m" font-size="9" text-anchor="end" fill="#111" transform="rotate(-90 1303 386)">flush</text>
+<text x="645" y="193" class="m" font-size="9" text-anchor="end" fill="#111">zero_row</text>
+<polyline points="650,190 1270,190 1270,380" class="ctl" marker-end="url(#ac)"/>
+<text x="1273" y="386" class="m" font-size="9" text-anchor="end" fill="#111" transform="rotate(-90 1273 386)">zero_row</text>
+<text x="1375" y="473" class="m" font-size="9" text-anchor="end" fill="#111">obuf_wr_en</text>
+<polyline points="1380,470 1500,470" class="ctl" marker-end="url(#ac)"/>
+<text x="1375" y="523" class="m" font-size="9" text-anchor="end" fill="#111">obuf_wr_addr</text>
+<polyline points="1380,520 1500,520" class="bus" marker-end="url(#ab)"/>
+<line x1="1466" y1="526" x2="1474" y2="514" class="sl"/>
+<text x="1472" y="512" class="m" font-size="8" text-anchor="middle" fill="#111">15</text>
+<text x="1375" y="573" class="m" font-size="9" text-anchor="end" fill="#111">obuf_wr_data</text>
+<polyline points="1380,570 1500,570" class="bus" marker-end="url(#ab)"/>
+<line x1="1466" y1="576" x2="1474" y2="564" class="sl"/>
+<text x="1472" y="562" class="m" font-size="8" text-anchor="middle" fill="#111">32</text>
+<rect x="270" y="770" width="300" height="84" class="leg" rx="0"/>
+<polyline points="284,792 340,792" class="bus" marker-end="url(#ab)"/>
+<line x1="308" y1="798" x2="316" y2="786" class="sl"/>
+<text x="314" y="784" class="m" font-size="8" text-anchor="middle" fill="#111">n</text>
+<text x="352" y="796" class="s" font-size="9" text-anchor="start" fill="#111">data bus, n bits</text>
+<polyline points="284,814 340,814" class="ctl" marker-end="url(#ac)"/>
+<text x="352" y="818" class="s" font-size="9" text-anchor="start" fill="#111">control, 1 bit</text>
+<polyline points="284,836 340,836" class="ctl"/>
+<polyline points="312,828 312,844" class="ctl"/>
+<circle cx="312" cy="836" r="3" fill="#111"/>
+<text x="352" y="840" class="s" font-size="9" text-anchor="start" fill="#111">junction (crossing without dot = no connection)</text>
+</svg>

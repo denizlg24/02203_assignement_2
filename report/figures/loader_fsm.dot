@@ -1,0 +1,15 @@
+digraph loader_fsm {
+    graph [bgcolor="white", splines=true, outputorder=nodesfirst, pad=0.2];
+    node [shape=circle, fixedsize=true, width=2.167, fontname="Helvetica", fontsize=11];
+    edge [fontname="Helvetica", fontsize=10, arrowsize=0.7];
+
+    // Moore outputs (=) and register transfers (<=) below the divider
+    s0 [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="2"><TR><TD><B>0: idle</B></TD></TR><HR/><TR><TD>(no capture)</TD></TR></TABLE>>, pos="0.0,388.0"];
+    s1 [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="2"><TR><TD><B>1: capture</B></TD></TR><HR/><TR><TD>row[sel_q] &lt;= init_q ?<BR/>init(d) : shift(d)<BR/>if sel_q = 2:<BR/>base_q &lt;= base_q + 1</TD></TR></TABLE>>, pos="0.0,118.0"];
+    note0 [shape=box, fixedsize=false, style=dashed, fontsize=10, fontname="Courier", margin="0.15,0.1", label="every cycle (both states):\l  ibuf_rd_en   = load_en   (Mealy)\l  ibuf_rd_addr = base_q + 88 * row_sel\l  sel_q  <= row_sel\l  init_q <= init\l  d       = ibuf_rd_data (read issued last cycle)\l\lrow[i] = R0..R5 (8 b each), i = top / mid / bot\l  shift(d): R0 <= R4, R1 <= R5, R2..R5 <= d bytes 0..3\l  init(d) : R0 <= 0,  R1 <= 0,  R2..R5 <= d bytes 0..3\l\lbase_q = top-row word address of the group\l  (= 88(r-1) + k), wraps 25167 -> 0 after\l  the last group of the frame\l\lwin_i = rows top/mid/bot, columns i..i+2\l", pos="400.0,253.0"];
+
+    s0 -> s0 [pos="e,-72.3,417.2 -72.3,358.8 -129.2,301.5 -130.9,465.6 -77.6,422.1", label="load_en = 0", lp="-147.9,388.0"];
+    s0 -> s1 [pos="e,-14.0,194.7 -14.0,311.3 -14.0,311.3 -14.0,201.7 -14.0,201.7", label="load_en = 1", lp="-46.6,253.0"];
+    s1 -> s0 [pos="e,14.0,311.3 14.0,194.7 14.0,194.7 14.0,304.3 14.0,304.3", label="load_en = 0", lp="46.6,253.0"];
+    s1 -> s1 [pos="e,-72.3,147.2 -72.3,88.8 -129.2,31.5 -130.9,195.6 -77.6,152.1", label="load_en = 1", lp="-147.9,118.0"];
+}

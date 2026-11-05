@@ -1,0 +1,34 @@
+digraph controller_fsm {
+    graph [bgcolor="white", splines=true, outputorder=nodesfirst, pad=0.2];
+    node [shape=circle, fixedsize=true, width=1.944, fontname="Helvetica", fontsize=11];
+    edge [fontname="Helvetica", fontsize=10, arrowsize=0.7];
+
+    // Moore outputs (=) and register transfers (<=) below the divider
+    s0 [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="2"><TR><TD><B>0: idle</B></TD></TR><HR/><TR><TD>r &lt;= 1, k &lt;= 0<BR/>ld &lt;= 0</TD></TR></TABLE>>, pos="0.0,1260.0"];
+    s1 [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="2"><TR><TD><B>1: zero_top</B></TD></TR><HR/><TR><TD>zero_row = 1<BR/>k &lt;= k + 1</TD></TR></TABLE>>, pos="0.0,1070.0"];
+    s2 [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="2"><TR><TD><B>2: load</B></TD></TR><HR/><TR><TD>load_en = 1<BR/>row_sel = ld<BR/>init = (k = 0)<BR/>ld &lt;= ld + 1</TD></TR></TABLE>>, pos="0.0,880.0"];
+    s3 [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="2"><TR><TD><B>3: wait</B></TD></TR><HR/><TR><TD>ld &lt;= 0</TD></TR></TABLE>>, pos="0.0,690.0"];
+    s4 [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="2"><TR><TD><B>4: comp_2</B></TD></TR><HR/><TR><TD>first = 1<BR/>k &lt;= k + 1</TD></TR></TABLE>>, pos="-240.0,510.0"];
+    s5 [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="2"><TR><TD><B>5: comp_4</B></TD></TR><HR/><TR><TD>write = 1<BR/>k &lt;= k + 1</TD></TR></TABLE>>, pos="240.0,510.0"];
+    s6 [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="2"><TR><TD><B>6: flush</B></TD></TR><HR/><TR><TD>flush = 1<BR/>r &lt;= r + 1</TD></TR></TABLE>>, pos="240.0,320.0"];
+    s7 [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="2"><TR><TD><B>7: zero_bot</B></TD></TR><HR/><TR><TD>zero_row = 1<BR/>k &lt;= k + 1</TD></TR></TABLE>>, pos="240.0,130.0"];
+    s8 [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="2"><TR><TD><B>8: done</B></TD></TR><HR/><TR><TD>finish = 1</TD></TR></TABLE>>, pos="-240.0,130.0"];
+    note0 [shape=box, fixedsize=false, style=dashed, fontsize=10, fontname="Courier", margin="0.15,0.1", label="k  : word index, counts mod 88 (87 -> 0)\lr  : centre row 1..286\lld : rows loaded in this group (0..2)\l\lload -> wait -> comp = 5 cycles per group:\lthe bottom word is read in the last load\lcycle and captured by the loader in wait,\lso the window is stable in comp_2/comp_4.\l", pos="-300.0,320.0"];
+
+    s0 -> s0 [pos="e,64.9,1233.8 64.9,1286.2 122.5,1342.1 124.3,1186.3 70.3,1229.1", label="start = 0", lp="135.9,1260.0"];
+    s0 -> s1 [pos="e,0.0,1140.0 0.0,1190.0 0.0,1190.0 0.0,1147.0 0.0,1147.0", label="start = 1", lp="27.4,1165.0"];
+    s1 -> s1 [pos="e,-64.9,1096.2 -64.9,1043.8 -122.5,987.9 -124.3,1143.7 -70.3,1100.9", label="k ≠ 87", lp="-128.1,1070.0"];
+    s1 -> s2 [pos="e,0.0,950.0 0.0,1000.0 0.0,1000.0 0.0,957.0 0.0,957.0", label="k = 87", lp="19.6,975.0"];
+    s2 -> s2 [pos="e,-64.9,906.2 -64.9,853.8 -122.5,797.9 -124.3,953.7 -70.3,910.9", label="ld ≠ 2", lp="-128.1,880.0"];
+    s2 -> s3 [pos="e,0.0,760.0 0.0,810.0 0.0,810.0 0.0,767.0 0.0,767.0", label="ld = 2", lp="19.6,785.0"];
+    s3 -> s4 [pos="e,-184.0,552.0 -56.0,648.0 -56.0,648.0 -178.4,556.2 -178.4,556.2", label="k = 0", lp="-104.6,590.8"];
+    s3 -> s5 [pos="e,184.0,552.0 56.0,648.0 56.0,648.0 178.4,556.2 178.4,556.2", label="k ≠ 0", lp="104.6,590.8"];
+    s4 -> s2 [pos="e,-38.1,821.3 -201.9,568.7 -201.9,568.7 -41.9,815.4 -41.9,815.4"];
+    s5 -> s2 [pos="e,38.1,821.3 201.9,568.7 201.9,568.7 41.9,815.4 41.9,815.4", label="k ≠ 87", lp="171.7,652.7"];
+    s5 -> s6 [pos="e,240.0,390.0 240.0,440.0 240.0,440.0 240.0,397.0 240.0,397.0", label="k = 87", lp="259.6,415.0"];
+    s6 -> s7 [pos="e,240.0,200.0 240.0,250.0 240.0,250.0 240.0,207.0 240.0,207.0", label="r = 286", lp="262.2,225.0"];
+    s7 -> s7 [pos="e,304.9,103.8 304.9,156.2 362.5,212.1 364.3,56.3 310.3,99.1", label="k ≠ 87", lp="368.1,130.0"];
+    s7 -> s8 [pos="e,-170.0,130.0 170.0,130.0 170.0,130.0 -163.0,130.0 -163.0,130.0", label="k = 87", lp="0.0,120.0"];
+    s6 -> s2 [pos="e,70.0,880.0 310.0,320.0 310.0,320.0 460.0,320.0 460.0,320.0 460.0,320.0 460.0,880.0 460.0,880.0 460.0,880.0 77.0,880.0 77.0,880.0", label="r ≠ 286", lp="482.2,610.0"];
+    s8 -> s0 [pos="e,-70.0,1260.0 -310.0,130.0 -310.0,130.0 -540.0,130.0 -540.0,130.0 -540.0,130.0 -540.0,1260.0 -540.0,1260.0 -540.0,1260.0 -77.0,1260.0 -77.0,1260.0"];
+}

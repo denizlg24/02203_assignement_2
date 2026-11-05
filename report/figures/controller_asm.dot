@@ -1,0 +1,76 @@
+digraph controller_asm {
+    graph [bgcolor="white", splines=true, outputorder=nodesfirst, pad=0.2];
+    node [fontname="Helvetica", fontsize=10, fixedsize=true];
+    edge [fontname="Helvetica", fontsize=9, arrowsize=0.7];
+
+    // State boundaries
+    cluster_idle [shape=box, style=dashed, label="idle\l", labelloc=t, fontsize=11, width=3.194, height=2.167, pos="0.0,1843.0"];
+    cluster_zero_top [shape=box, style=dashed, label="zero_top\l", labelloc=t, fontsize=11, width=3.194, height=3.000, pos="0.0,1613.0"];
+    cluster_load [shape=box, style=dashed, label="load\l", labelloc=t, fontsize=11, width=3.194, height=4.917, pos="0.0,1284.0"];
+    cluster_wait [shape=box, style=dashed, label="wait\l", labelloc=t, fontsize=11, width=3.194, height=2.167, pos="0.0,985.0"];
+    cluster_comp_2 [shape=box, style=dashed, label="comp_2\l", labelloc=t, fontsize=11, width=3.194, height=1.917, pos="-300.0,794.0"];
+    cluster_comp_4 [shape=box, style=dashed, label="comp_4\l", labelloc=t, fontsize=11, width=3.194, height=3.000, pos="300.0,755.0"];
+    cluster_flush [shape=box, style=dashed, label="flush\l", labelloc=t, fontsize=11, width=3.194, height=3.000, pos="300.0,495.0"];
+    cluster_zero_bot [shape=box, style=dashed, label="zero_bot\l", labelloc=t, fontsize=11, width=3.194, height=3.000, pos="300.0,235.0"];
+    cluster_done [shape=box, style=dashed, label="done\l", labelloc=t, fontsize=11, width=3.194, height=1.083, pos="0.0,89.0"];
+
+    // Blocks
+    i_b [shape=box, label="r <= 1, k <= 0, ld <= 0", width=2.361, height=0.444, pos="0.0,1875.0"];
+    i_d [shape=diamond, label="start = 1", width=2.361, height=0.694, pos="0.0,1806.0"];
+    z_b1 [shape=box, label="zero_row = 1", width=2.361, height=0.444, pos="0.0,1675.0"];
+    z_b2 [shape=box, label="k <= k + 1", width=2.361, height=0.444, pos="0.0,1615.0"];
+    z_d [shape=diamond, label="k = 87", width=2.361, height=0.694, pos="0.0,1546.0"];
+    l_b1 [shape=box, label="load_en = 1, row_sel = ld", width=2.361, height=0.444, pos="0.0,1415.0"];
+    l_b2 [shape=box, label="ld <= ld + 1", width=2.361, height=0.444, pos="0.0,1355.0"];
+    l_dk [shape=diamond, label="k = 0", width=2.361, height=0.694, pos="0.0,1286.0"];
+    o_init [shape=box, style=rounded, label="init = 1", width=2.361, height=0.444, pos="0.0,1217.0"];
+    l_d [shape=diamond, label="ld = 2", width=2.361, height=0.694, pos="0.0,1148.0"];
+    w_b [shape=box, label="ld <= 0", width=2.361, height=0.444, pos="0.0,1017.0"];
+    w_d [shape=diamond, label="k = 0", width=2.361, height=0.694, pos="0.0,948.0"];
+    c2_b1 [shape=box, label="first = 1", width=2.361, height=0.444, pos="-300.0,817.0"];
+    c2_b2 [shape=box, label="k <= k + 1", width=2.361, height=0.444, pos="-300.0,757.0"];
+    c4_b1 [shape=box, label="write = 1", width=2.361, height=0.444, pos="300.0,817.0"];
+    c4_b2 [shape=box, label="k <= k + 1", width=2.361, height=0.444, pos="300.0,757.0"];
+    c4_d [shape=diamond, label="k = 87", width=2.361, height=0.694, pos="300.0,688.0"];
+    f_b1 [shape=box, label="flush = 1", width=2.361, height=0.444, pos="300.0,557.0"];
+    f_b2 [shape=box, label="r <= r + 1", width=2.361, height=0.444, pos="300.0,497.0"];
+    f_d [shape=diamond, label="r = 286", width=2.361, height=0.694, pos="300.0,428.0"];
+    zb_b1 [shape=box, label="zero_row = 1", width=2.361, height=0.444, pos="300.0,297.0"];
+    zb_b2 [shape=box, label="k <= k + 1", width=2.361, height=0.444, pos="300.0,237.0"];
+    zb_d [shape=diamond, label="k = 87", width=2.361, height=0.694, pos="300.0,168.0"];
+    d_b [shape=box, label="finish = 1", width=2.361, height=0.444, pos="0.0,82.0"];
+
+    // Transitions (straight segments only)
+    i_b -> i_d [pos="e,0.0,1831.0 0.0,1859.0 0.0,1859.0 0.0,1838.0 0.0,1838.0"];
+    i_d -> i_b [pos="e,-85.0,1875.0 -85.0,1806.0 -85.0,1806.0 -111.0,1806.0 -111.0,1806.0 -111.0,1806.0 -111.0,1875.0 -111.0,1875.0 -111.0,1875.0 -92.0,1875.0 -92.0,1875.0", label="F", lp="-90.3,1813.4"];
+    i_d -> z_b1 [pos="e,0.0,1691.0 0.0,1781.0 0.0,1781.0 0.0,1698.0 0.0,1698.0", label="T", lp="6.3,1755.0"];
+    z_b1 -> z_b2 [pos="e,0.0,1631.0 0.0,1659.0 0.0,1659.0 0.0,1638.0 0.0,1638.0"];
+    z_b2 -> z_d [pos="e,0.0,1571.0 0.0,1599.0 0.0,1599.0 0.0,1578.0 0.0,1578.0"];
+    z_d -> z_b1 [pos="e,-85.0,1675.0 -85.0,1546.0 -85.0,1546.0 -111.0,1546.0 -111.0,1546.0 -111.0,1546.0 -111.0,1675.0 -111.0,1675.0 -111.0,1675.0 -92.0,1675.0 -92.0,1675.0", label="F", lp="-90.3,1553.4"];
+    z_d -> l_b1 [pos="e,0.0,1431.0 0.0,1521.0 0.0,1521.0 0.0,1438.0 0.0,1438.0", label="T", lp="6.3,1495.0"];
+    l_b1 -> l_b2 [pos="e,0.0,1371.0 0.0,1399.0 0.0,1399.0 0.0,1378.0 0.0,1378.0"];
+    l_b2 -> l_dk [pos="e,0.0,1311.0 0.0,1339.0 0.0,1339.0 0.0,1318.0 0.0,1318.0"];
+    l_dk -> o_init [pos="e,0.0,1233.0 0.0,1261.0 0.0,1261.0 0.0,1240.0 0.0,1240.0", label="T", lp="6.3,1249.8"];
+    l_dk -> l_d [pos="e,0.0,1187.0 85.0,1286.0 85.0,1286.0 105.0,1286.0 105.0,1286.0 105.0,1286.0 105.0,1187.0 105.0,1187.0 105.0,1187.0 7.0,1187.0 7.0,1187.0", label="F", lp="90.3,1293.4"];
+    o_init -> l_d [pos="e,0.0,1173.0 0.0,1201.0 0.0,1201.0 0.0,1180.0 0.0,1180.0"];
+    l_d -> l_b1 [pos="e,-85.0,1415.0 -85.0,1148.0 -85.0,1148.0 -111.0,1148.0 -111.0,1148.0 -111.0,1148.0 -111.0,1415.0 -111.0,1415.0 -111.0,1415.0 -92.0,1415.0 -92.0,1415.0", label="F", lp="-90.3,1155.4"];
+    l_d -> w_b [pos="e,0.0,1033.0 0.0,1123.0 0.0,1123.0 0.0,1040.0 0.0,1040.0", label="T", lp="6.3,1097.0"];
+    w_b -> w_d [pos="e,0.0,973.0 0.0,1001.0 0.0,1001.0 0.0,980.0 0.0,980.0"];
+    w_d -> c2_b1 [pos="e,-300.0,833.0 -85.0,948.0 -85.0,948.0 -300.0,948.0 -300.0,948.0 -300.0,948.0 -300.0,840.0 -300.0,840.0", label="T", lp="-90.3,955.4"];
+    w_d -> c4_b1 [pos="e,300.0,833.0 85.0,948.0 85.0,948.0 300.0,948.0 300.0,948.0 300.0,948.0 300.0,840.0 300.0,840.0", label="F", lp="90.3,955.4"];
+    c2_b1 -> c2_b2 [pos="e,-300.0,773.0 -300.0,801.0 -300.0,801.0 -300.0,780.0 -300.0,780.0"];
+    c2_b2 -> l_b1 [pos="e,0.0,1483.0 -385.0,757.0 -385.0,757.0 -440.0,757.0 -440.0,757.0 -440.0,757.0 -440.0,1483.0 -440.0,1483.0 -440.0,1483.0 -7.0,1483.0 -7.0,1483.0"];
+    c4_b1 -> c4_b2 [pos="e,300.0,773.0 300.0,801.0 300.0,801.0 300.0,780.0 300.0,780.0"];
+    c4_b2 -> c4_d [pos="e,300.0,713.0 300.0,741.0 300.0,741.0 300.0,720.0 300.0,720.0"];
+    c4_d -> l_b1 [pos="e,85.0,1415.0 385.0,688.0 385.0,688.0 440.0,688.0 440.0,688.0 440.0,688.0 440.0,1415.0 440.0,1415.0 440.0,1415.0 92.0,1415.0 92.0,1415.0", label="F", lp="390.3,695.4"];
+    f_d -> l_b1 [pos="e,85.0,1415.0 385.0,428.0 385.0,428.0 440.0,428.0 440.0,428.0 440.0,428.0 440.0,1415.0 440.0,1415.0 440.0,1415.0 92.0,1415.0 92.0,1415.0", label="F", lp="390.3,435.4"];
+    c4_d -> f_b1 [pos="e,300.0,573.0 300.0,663.0 300.0,663.0 300.0,580.0 300.0,580.0", label="T", lp="306.3,637.0"];
+    f_b1 -> f_b2 [pos="e,300.0,513.0 300.0,541.0 300.0,541.0 300.0,520.0 300.0,520.0"];
+    f_b2 -> f_d [pos="e,300.0,453.0 300.0,481.0 300.0,481.0 300.0,460.0 300.0,460.0"];
+    f_d -> zb_b1 [pos="e,300.0,313.0 300.0,403.0 300.0,403.0 300.0,320.0 300.0,320.0", label="T", lp="306.3,377.0"];
+    zb_b1 -> zb_b2 [pos="e,300.0,253.0 300.0,281.0 300.0,281.0 300.0,260.0 300.0,260.0"];
+    zb_b2 -> zb_d [pos="e,300.0,193.0 300.0,221.0 300.0,221.0 300.0,200.0 300.0,200.0"];
+    zb_d -> zb_b1 [pos="e,385.0,297.0 385.0,168.0 385.0,168.0 411.0,168.0 411.0,168.0 411.0,168.0 411.0,297.0 411.0,297.0 411.0,297.0 392.0,297.0 392.0,297.0", label="F", lp="390.3,175.4"];
+    zb_d -> d_b [pos="e,0.0,98.0 215.0,168.0 215.0,168.0 0.0,168.0 0.0,168.0 0.0,168.0 0.0,105.0 0.0,105.0", label="T", lp="209.7,175.4"];
+    d_b -> i_b [pos="e,0.0,1891.0 0.0,66.0 0.0,66.0 0.0,20.0 0.0,20.0 0.0,20.0 -470.0,20.0 -470.0,20.0 -470.0,20.0 -470.0,1947.0 -470.0,1947.0 -470.0,1947.0 0.0,1947.0 0.0,1947.0 0.0,1947.0 0.0,1898.0 0.0,1898.0"];
+}

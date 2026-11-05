@@ -1,0 +1,44 @@
+digraph loader_asm {
+    graph [bgcolor="white", splines=true, outputorder=nodesfirst, pad=0.2];
+    node [fontname="Helvetica", fontsize=10, fixedsize=true];
+    edge [fontname="Helvetica", fontsize=9, arrowsize=0.7];
+
+    // State boundaries
+    cluster_idle [shape=box, style=dashed, label="idle\l", labelloc=t, fontsize=11, width=8.056, height=3.833, pos="0.0,870.0"];
+    cluster_capture [shape=box, style=dashed, label="capture\l", labelloc=t, fontsize=11, width=8.056, height=7.889, pos="0.0,404.0"];
+
+    // Blocks
+    i_b1 [shape=box, label="ibuf_rd_addr = base_q + 88·row_sel", width=3.194, height=0.444, pos="0.0,962.0"];
+    i_b2 [shape=box, label="sel_q <= row_sel, init_q <= init", width=3.194, height=0.444, pos="0.0,902.0"];
+    i_d [shape=diamond, label="load_en = 1", width=2.639, height=0.694, pos="0.0,833.0"];
+    o_rd1 [shape=box, style=rounded, label="ibuf_rd_en = 1", width=3.194, height=0.444, pos="0.0,764.0"];
+    c_b1 [shape=box, label="ibuf_rd_addr = base_q + 88·row_sel", width=3.194, height=0.444, pos="0.0,642.0"];
+    c_b2 [shape=box, label="sel_q <= row_sel, init_q <= init", width=3.194, height=0.444, pos="0.0,582.0"];
+    c_d1 [shape=diamond, label="init_q = 1", width=2.639, height=0.694, pos="0.0,513.0"];
+    o_init [shape=box, style=rounded, label="row[sel_q] <= init(d)", width=2.778, height=0.444, pos="-130.0,444.0"];
+    o_shift [shape=box, style=rounded, label="row[sel_q] <= shift(d)", width=2.778, height=0.444, pos="130.0,444.0"];
+    c_d2 [shape=diamond, label="sel_q = 2", width=2.639, height=0.694, pos="0.0,367.0"];
+    o_base [shape=box, style=rounded, label="base_q <= base_q + 1", width=2.778, height=0.444, pos="130.0,298.0"];
+    c_d3 [shape=diamond, label="load_en = 1", width=2.639, height=0.694, pos="0.0,221.0"];
+    o_rd2 [shape=box, style=rounded, label="ibuf_rd_en = 1", width=3.194, height=0.444, pos="0.0,152.0"];
+    note0 [shape=box, fixedsize=false, style=dashed, fontsize=10, fontname="Courier", margin="0.15,0.1", label="row[i] = R0..R5 of window row i (top/mid/bot)\ld = ibuf_rd_data (read issued the cycle before)\lshift(d): R0 <= R4, R1 <= R5, R2..R5 <= d[7:0]..d[31:24]\linit(d) : R0 <= 0,  R1 <= 0,  R2..R5 <= d[7:0]..d[31:24]\lbase_q wraps 25167 -> 0 after the last group\l", pos="0.0,50.0"];
+
+    // Transitions (straight segments only)
+    i_b1 -> i_b2 [pos="e,0.0,918.0 0.0,946.0 0.0,946.0 0.0,925.0 0.0,925.0"];
+    i_b2 -> i_d [pos="e,0.0,858.0 0.0,886.0 0.0,886.0 0.0,865.0 0.0,865.0"];
+    i_d -> i_b1 [pos="e,-115.0,962.0 -95.0,833.0 -95.0,833.0 -141.0,833.0 -141.0,833.0 -141.0,833.0 -141.0,962.0 -141.0,962.0 -141.0,962.0 -122.0,962.0 -122.0,962.0", label="F", lp="-100.3,840.4"];
+    i_d -> o_rd1 [pos="e,0.0,780.0 0.0,808.0 0.0,808.0 0.0,787.0 0.0,787.0", label="T", lp="6.3,796.8"];
+    o_rd1 -> c_b1 [pos="e,0.0,658.0 0.0,748.0 0.0,748.0 0.0,665.0 0.0,665.0"];
+    c_b1 -> c_b2 [pos="e,0.0,598.0 0.0,626.0 0.0,626.0 0.0,605.0 0.0,605.0"];
+    c_b2 -> c_d1 [pos="e,0.0,538.0 0.0,566.0 0.0,566.0 0.0,545.0 0.0,545.0"];
+    c_d1 -> o_init [pos="e,-130.0,460.0 -95.0,513.0 -95.0,513.0 -130.0,513.0 -130.0,513.0 -130.0,513.0 -130.0,467.0 -130.0,467.0", label="T", lp="-100.3,520.4"];
+    c_d1 -> o_shift [pos="e,130.0,460.0 95.0,513.0 95.0,513.0 130.0,513.0 130.0,513.0 130.0,513.0 130.0,467.0 130.0,467.0", label="F", lp="100.3,520.4"];
+    o_init -> c_d2 [pos="e,0.0,392.0 -130.0,428.0 -130.0,428.0 -130.0,410.0 -130.0,410.0 -130.0,410.0 0.0,410.0 0.0,410.0 0.0,410.0 0.0,399.0 0.0,399.0"];
+    o_shift -> c_d2 [pos="e,0.0,392.0 130.0,428.0 130.0,428.0 130.0,410.0 130.0,410.0 130.0,410.0 0.0,410.0 0.0,410.0 0.0,410.0 0.0,399.0 0.0,399.0"];
+    c_d2 -> o_base [pos="e,130.0,314.0 95.0,367.0 95.0,367.0 130.0,367.0 130.0,367.0 130.0,367.0 130.0,321.0 130.0,321.0", label="T", lp="100.3,374.4"];
+    o_base -> c_d3 [pos="e,0.0,264.0 130.0,282.0 130.0,282.0 130.0,264.0 130.0,264.0 130.0,264.0 7.0,264.0 7.0,264.0"];
+    c_d2 -> c_d3 [pos="e,0.0,246.0 0.0,342.0 0.0,342.0 0.0,253.0 0.0,253.0", label="F", lp="6.3,316.0"];
+    c_d3 -> o_rd2 [pos="e,0.0,168.0 0.0,196.0 0.0,196.0 0.0,175.0 0.0,175.0", label="T", lp="6.3,184.8"];
+    o_rd2 -> c_b1 [pos="e,-115.0,642.0 -115.0,152.0 -115.0,152.0 -260.0,152.0 -260.0,152.0 -260.0,152.0 -260.0,642.0 -260.0,642.0 -260.0,642.0 -122.0,642.0 -122.0,642.0"];
+    c_d3 -> i_b1 [pos="e,0.0,978.0 95.0,221.0 95.0,221.0 320.0,221.0 320.0,221.0 320.0,221.0 320.0,1034.0 320.0,1034.0 320.0,1034.0 0.0,1034.0 0.0,1034.0 0.0,1034.0 0.0,985.0 0.0,985.0", label="F", lp="100.3,228.4"];
+}

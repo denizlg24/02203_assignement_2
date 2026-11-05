@@ -1,0 +1,25 @@
+digraph writer_fsm {
+    graph [bgcolor="white", splines=true, outputorder=nodesfirst, pad=0.2];
+    node [shape=circle, fixedsize=true, width=2.000, fontname="Helvetica", fontsize=11];
+    edge [fontname="Helvetica", fontsize=10, arrowsize=0.7];
+
+    // Moore outputs (=) and register transfers (<=) below the divider
+    s0 [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="2"><TR><TD><B>0: idle</B></TD></TR><HR/><TR><TD>wr_en = 0</TD></TR></TABLE>>, pos="0.0,562.0"];
+    s1 [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="2"><TR><TD><B>1: store_2</B></TD></TR><HR/><TR><TD>carry &lt;=<BR/>{p3, p2, 0}</TD></TR></TABLE>>, pos="-420.0,192.0"];
+    s2 [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="2"><TR><TD><B>2: store_4</B></TD></TR><HR/><TR><TD>wr_en = 1<BR/>wr_data = {p0, carry}<BR/>carry &lt;= {p3, p2, p1}<BR/>wa &lt;= wa + 1</TD></TR></TABLE>>, pos="-140.0,192.0"];
+    s3 [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="2"><TR><TD><B>3: flush</B></TD></TR><HR/><TR><TD>wr_en = 1<BR/>wr_data = {0, carry}<BR/>wa &lt;= wa + 1</TD></TR></TABLE>>, pos="140.0,192.0"];
+    s4 [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="2"><TR><TD><B>4: zero</B></TD></TR><HR/><TR><TD>wr_en = 1<BR/>wr_data = 0<BR/>wa &lt;= wa + 1</TD></TR></TABLE>>, pos="420.0,192.0"];
+    note0 [shape=box, fixedsize=false, style=dashed, fontsize=10, fontname="Courier", margin="0.15,0.1", label="obuf_wr_en   = wr_en\lobuf_wr_addr = wa      (wraps 25343 -> 0)\lobuf_wr_data = wr_data\lp_i = pixel_i from sobel_i\l\lstore_4 -> flush only on the last batch\lof a row; flush -> zero only after row 286.\lzero runs for exactly the 88 cycles\lzero_row is held by the controller.\l", pos="-450.0,562.0"];
+
+    s0 -> s0 [pos="e,27.0,628.8 -27.0,628.8 -83.2,686.2 74.7,688.0 31.7,634.1", label="no command", lp="0.0,682.2"];
+    s0 -> s1 [pos="e,-373.1,246.6 -60.1,522.4 -60.1,522.4 -367.9,251.3 -367.9,251.3", label="first = 1", lp="-242.7,393.5"];
+    s1 -> s0 [pos="e,-46.9,507.4 -359.9,231.6 -359.9,231.6 -52.1,502.7 -52.1,502.7"];
+    s0 -> s2 [pos="e,-124.1,262.2 -34.6,498.9 -34.6,498.9 -121.6,268.8 -121.6,268.8", label="write = 1", lp="-102.0,393.8"];
+    s2 -> s0 [pos="e,-15.9,491.8 -105.4,255.1 -105.4,255.1 -18.4,485.2 -18.4,485.2", label="flush = 0", lp="-29.0,383.9"];
+    s0 -> s4 [pos="e,359.9,231.6 46.9,507.4 46.9,507.4 354.6,236.3 354.6,236.3", label="zero_row = 1", lp="232.1,305.3"];
+    s4 -> s0 [pos="e,60.1,522.4 373.1,246.6 373.1,246.6 65.4,517.7 65.4,517.7", label="zero_row = 0", lp="250.5,393.5"];
+    s3 -> s0 [pos="e,25.5,494.7 114.5,259.3 114.5,259.3 28.0,488.1 28.0,488.1", label="zero_row = 0", lp="48.4,340.3"];
+    s2 -> s3 [pos="e,68.0,192.0 -68.0,192.0 -68.0,192.0 61.0,192.0 61.0,192.0", label="flush = 1", lp="0.0,202.0"];
+    s3 -> s4 [pos="e,348.0,192.0 212.0,192.0 212.0,192.0 341.0,192.0 341.0,192.0", label="zero_row = 1", lp="280.0,202.0"];
+    s4 -> s4 [pos="e,393.0,125.2 447.0,125.2 503.2,67.8 345.3,66.0 388.3,119.9", label="zero_row = 1", lp="420.0,71.8"];
+}
