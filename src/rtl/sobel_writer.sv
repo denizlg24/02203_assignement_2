@@ -1,5 +1,6 @@
 module sobel_writer #(
-    parameter int BUF_AW = 15
+    parameter int BUF_AW    = 15,
+    parameter int BUF_DEPTH = 25344
 )(
     input  logic               clk,
     input  logic               rst_n,

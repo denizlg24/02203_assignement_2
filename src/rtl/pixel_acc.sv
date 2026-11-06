@@ -77,8 +77,9 @@ module pixel_acc #(
     );
 
     sobel_loader #(
-        .BUF_AW    (BUF_AW),
-        .IMG_WIDTH (IMG_WIDTH)
+        .BUF_AW     (BUF_AW),
+        .IMG_WIDTH  (IMG_WIDTH),
+        .IMG_HEIGHT (IMG_HEIGHT)
     ) u_ld (
         .clk          (clk),
         .rst_n        (rst_n),
@@ -100,7 +101,8 @@ module pixel_acc #(
     sobel_kernel u_sobel_3 (.win(win_3), .pixel(pixel_3));
 
     sobel_writer #(
-        .BUF_AW (BUF_AW)
+        .BUF_AW    (BUF_AW),
+        .BUF_DEPTH (BUF_DEPTH)
     ) u_wr (
         .clk          (clk),
         .rst_n        (rst_n),

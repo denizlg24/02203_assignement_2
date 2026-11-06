@@ -213,3 +213,29 @@ run_ss: library_mapping
 	-l $(BUILD_DIR)/logs/sim/$(START_TIME)_ss_sim.log
 
 sim_ss: compile_ss elaborate_ss run_ss
+
+#============================================================
+# Verilator unit tests (no Questa needed)
+#   make test_loader | test_writer | test_units
+#   append TRACE=1 to dump a VCD waveform into build/unit/
+#============================================================
+
+UNIT_DIR     = $(BUILD_DIR)/unit
+VERILATOR_UT = verilator --binary --timing --trace-vcd -j 0 -Wno-fatal
+UNIT_RUN_ARG = $(if $(filter 1,$(TRACE)),+trace,)
+
+test_loader:
+	mkdir -p $(UNIT_DIR)
+	$(VERILATOR_UT) --top-module tb_sobel_loader --Mdir $(UNIT_DIR)/loader \
+	../src/tb/tb_sobel_loader.sv ../src/rtl/sobel_loader.sv
+	cd $(UNIT_DIR) && ./loader/Vtb_sobel_loader $(UNIT_RUN_ARG)
+
+test_writer:
+	mkdir -p $(UNIT_DIR)
+	$(VERILATOR_UT) --top-module tb_sobel_writer --Mdir $(UNIT_DIR)/writer \
+	../src/tb/tb_sobel_writer.sv ../src/rtl/sobel_writer.sv
+	cd $(UNIT_DIR) && ./writer/Vtb_sobel_writer $(UNIT_RUN_ARG)
+
+test_units: test_loader test_writer
+
+.PHONY: test_loader test_writer test_units
