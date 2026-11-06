@@ -66,7 +66,13 @@ if { $ACC_LANG eq "vhdl" } {
   add_files -norecurse $DIR/../src/rtl/pixel_acc_vhd.vhd
   set_property file_type {VHDL 2008} [get_files pixel_acc_vhd.vhd]
 } elseif { $ACC_LANG eq "sv" } {
-  add_files -norecurse $DIR/../src/rtl/pixel_acc.sv
+  add_files -norecurse [list \
+    $DIR/../src/rtl/sobel_controller.sv \
+    $DIR/../src/rtl/sobel_loader.sv \
+    $DIR/../src/rtl/sobel_kernel.sv \
+    $DIR/../src/rtl/sobel_writer.sv \
+    $DIR/../src/rtl/pixel_acc.sv \
+  ]
 } else {
   puts "ERROR: ACC_LANG must be 'sv' or 'vhdl', got '$ACC_LANG'"
   exit 1

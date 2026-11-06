@@ -45,92 +45,76 @@ module pixel_acc #(
     output logic                  finish
 );
 
-    // ============================================================
-    // BRAM has 1-cycle read latency, so:
-    //   cycle 0: read ibuf[0] issued  (rd_data not yet valid)
-    //   cycle 1: read ibuf[1] issued, ibuf[0] data valid -> write obuf[0]
-    //   ...
-    //   cycle N: read ibuf[N] issued (last), write obuf[N-1]
-    //   cycle N+1: no new read, write obuf[N], assert finish
-    //
-    // ============================================================
+    localparam int IMG_HEIGHT = BUF_DEPTH / IMG_WIDTH;
 
-    typedef enum logic [1:0] {
-        IDLE    = 2'b00,
-        PROCESS = 2'b01,
-        DRAIN   = 2'b10
-    } state_t;
+    logic                 load_en;
+    logic [1:0]           row_sel;
+    logic                 init;
 
-    state_t            state;
-    logic [BUF_AW-1:0] rd_addr;   // current ibuf read address
-    logic [BUF_AW-1:0] wr_addr;   // current obuf write address (= rd_addr delayed 1 cycle)
-    logic              pipe_valid; // 0 on first PROCESS cycle (rd_data not yet valid)
-    logic [31:0] pixel_out;
-    
+    logic                 first;
+    logic                 write;
+    logic                 flush;
+    logic                 zero_row;
 
-    // ---- FSM ----
-    always_ff @(posedge clk or negedge rst_n) begin
-        if (~rst_n) begin
-            state      <= IDLE;
-            rd_addr    <= '0;
-            wr_addr    <= '0;
-            pipe_valid <= 1'b0;
-            ibuf_rd_en <= 1'b0;
-            obuf_wr_en <= 1'b0;
-            finish     <= 1'b0;
-        end else begin
-            ibuf_rd_en <= 1'b0;
-            obuf_wr_en <= 1'b0;
-            finish     <= 1'b0;
+    logic [2:0][2:0][7:0] win_0, win_1, win_2, win_3;
+    logic [7:0]           pixel_0, pixel_1, pixel_2, pixel_3;
 
-            case (state)
-                IDLE: begin
-                    pipe_valid <= 1'b0;
-                    if (start) begin
-                        rd_addr      <= '0;
-                        ibuf_rd_en   <= 1'b1;
-                        ibuf_rd_addr <= '0;
-                        state        <= PROCESS;
-                    end
-                end
+    sobel_controller #(
+        .IMG_WIDTH  (IMG_WIDTH),
+        .IMG_HEIGHT (IMG_HEIGHT)
+    ) u_ctrl (
+        .clk      (clk),
+        .rst_n    (rst_n),
+        .start    (start),
+        .finish   (finish),
+        .load_en  (load_en),
+        .row_sel  (row_sel),
+        .init     (init),
+        .first    (first),
+        .write    (write),
+        .flush    (flush),
+        .zero_row (zero_row)
+    );
 
-                PROCESS: begin
-                    pipe_valid <= 1'b1;
-                    wr_addr    <= rd_addr;  // write address tracks read address with 1 cycle latency
+    sobel_loader #(
+        .BUF_AW    (BUF_AW),
+        .IMG_WIDTH (IMG_WIDTH)
+    ) u_ld (
+        .clk          (clk),
+        .rst_n        (rst_n),
+        .load_en      (load_en),
+        .row_sel      (row_sel),
+        .init         (init),
+        .ibuf_rd_en   (ibuf_rd_en),
+        .ibuf_rd_addr (ibuf_rd_addr),
+        .ibuf_rd_data (ibuf_rd_data),
+        .win_0        (win_0),
+        .win_1        (win_1),
+        .win_2        (win_2),
+        .win_3        (win_3)
+    );
 
-                    // Write result from previous read (suppressed on first cycle)
-                    if (pipe_valid) begin
-                        obuf_wr_en   <= 1'b1;
-                        obuf_wr_addr <= wr_addr;
-                        obuf_wr_data <= pixel_out;
-                    end
+    sobel_kernel u_sobel_0 (.win(win_0), .pixel(pixel_0));
+    sobel_kernel u_sobel_1 (.win(win_1), .pixel(pixel_1));
+    sobel_kernel u_sobel_2 (.win(win_2), .pixel(pixel_2));
+    sobel_kernel u_sobel_3 (.win(win_3), .pixel(pixel_3));
 
-                    if (rd_addr == BUF_AW'(BUF_DEPTH - 1)) begin
-                        // Last read issued - drain the pipeline
-                        ibuf_rd_en <= 1'b0;
-                        state      <= DRAIN;
-                    end else begin
-                        rd_addr      <= rd_addr + 1'b1;
-                        ibuf_rd_en   <= 1'b1;
-                        ibuf_rd_addr <= rd_addr + 1'b1;
-                    end
-                end
+    sobel_writer #(
+        .BUF_AW (BUF_AW)
+    ) u_wr (
+        .clk          (clk),
+        .rst_n        (rst_n),
+        .pixel_0      (pixel_0),
+        .pixel_1      (pixel_1),
+        .pixel_2      (pixel_2),
+        .pixel_3      (pixel_3),
+        .first        (first),
+        .write        (write),
+        .flush        (flush),
+        .zero_row     (zero_row),
+        .obuf_wr_en   (obuf_wr_en),
+        .obuf_wr_addr (obuf_wr_addr),
+        .obuf_wr_data (obuf_wr_data)
+    );
 
-                DRAIN: begin
-                    // Write the last word (pipeline had one word in flight)
-                    obuf_wr_en   <= 1'b1;
-                    obuf_wr_addr <= wr_addr;
-                    obuf_wr_data <= pixel_out;
-                    finish       <= 1'b1;
-                    state        <= IDLE;
-                end
-
-                default: state <= IDLE;
-            endcase
-        end
-    end
-    
-    always_comb begin
-        pixel_out = ~ibuf_rd_data;  // TASK 0: invert all pixels
-    end
 endmodule
