@@ -99,6 +99,9 @@ test_ss: check-env
 test_ss_gui: check-env
 	$(MAKE) -C sim sim_ss BUILD_DIR=$(BUILD_DIR) ACC_LANG=$(ACC_LANG) GUI=""
 
+test_units: check-env
+	$(MAKE) -C sim qtest_units BUILD_DIR=$(BUILD_DIR)
+
 ######################################################################
 # fpga targets
 ######################################################################

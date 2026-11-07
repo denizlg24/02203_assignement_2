@@ -65,3 +65,7 @@ run_ss:
 
 sim_ss:
 	$(QUESTA) sim_ss
+
+qtest_loader qtest_writer qtest_kernel qtest_units:
+	if not exist "$(BUILD_DIR)\unit_questa" mkdir "$(BUILD_DIR)\unit_questa"
+	$(QUESTA) $@
