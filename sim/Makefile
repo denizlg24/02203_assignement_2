@@ -216,7 +216,7 @@ sim_ss: compile_ss elaborate_ss run_ss
 
 #============================================================
 # Verilator unit tests (no Questa needed)
-#   make test_loader | test_writer | test_units
+#   make test_loader | test_writer | test_kernel | test_units
 #   append TRACE=1 to dump a VCD waveform into build/unit/
 #============================================================
 
@@ -236,6 +236,34 @@ test_writer:
 	../src/tb/tb_sobel_writer.sv ../src/rtl/sobel_writer.sv
 	cd $(UNIT_DIR) && ./writer/Vtb_sobel_writer $(UNIT_RUN_ARG)
 
-test_units: test_loader test_writer
+test_kernel:
+	mkdir -p $(UNIT_DIR)
+	$(VERILATOR_UT) --top-module tb_sobel_kernel --Mdir $(UNIT_DIR)/kernel \
+	../src/tb/tb_sobel_kernel.sv ../src/rtl/sobel_kernel.sv
+	cd $(UNIT_DIR) && ./kernel/Vtb_sobel_kernel $(UNIT_RUN_ARG)
 
-.PHONY: test_loader test_writer test_units
+test_units: test_loader test_writer test_kernel
+
+.PHONY: test_loader test_writer test_kernel test_units
+
+#============================================================
+# Questa unit tests (same testbenches, no Verilator needed)
+#   make qtest_loader | qtest_writer | qtest_kernel | qtest_units
+#   -suppress 7061: tb_sobel_writer resets always_ff variables from initial
+#============================================================
+
+QUNIT_DIR = $(BUILD_DIR)/unit_questa
+
+$(QUNIT_DIR):
+	mkdir -p $@
+
+qtest_%: | $(QUNIT_DIR)
+	vlib $(QUNIT_DIR)/work_$*
+	vlog -sv -svinputport=compat -work $(QUNIT_DIR)/work_$* \
+	../src/tb/tb_sobel_$*.sv ../src/rtl/sobel_$*.sv
+	cd $(QUNIT_DIR) && vsim -c -suppress 7061 -work work_$* tb_sobel_$* \
+	-do "run -all; quit -f"
+
+qtest_units: qtest_loader qtest_writer qtest_kernel
+
+.PHONY: qtest_units
