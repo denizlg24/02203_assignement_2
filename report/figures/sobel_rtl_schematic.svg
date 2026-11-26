@@ -17,7 +17,6 @@
 .grp{fill:#fafafa;stroke:#111;stroke-width:1.6}
 .acc{fill:none;stroke:#111;stroke-width:2.2}
 .wrap{fill:none;stroke:#777;stroke-width:1.2;stroke-dasharray:10 5}
-.leg{fill:#fff;stroke:#999;stroke-width:0.8}
 </style>
 <defs>
 <marker id="ac" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="7" markerHeight="7" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#333"/></marker>
@@ -142,9 +141,6 @@
 <text x="645" y="173" class="m" font-size="9" text-anchor="end" fill="#111">flush</text>
 <polyline points="650,170 1300,170 1300,380" class="ctl" marker-end="url(#ac)"/>
 <text x="1303" y="386" class="m" font-size="9" text-anchor="end" fill="#111" transform="rotate(-90 1303 386)">flush</text>
-<text x="645" y="193" class="m" font-size="9" text-anchor="end" fill="#111">zero_row</text>
-<polyline points="650,190 1270,190 1270,380" class="ctl" marker-end="url(#ac)"/>
-<text x="1273" y="386" class="m" font-size="9" text-anchor="end" fill="#111" transform="rotate(-90 1273 386)">zero_row</text>
 <text x="1375" y="473" class="m" font-size="9" text-anchor="end" fill="#111">obuf_wr_en</text>
 <polyline points="1380,470 1500,470" class="ctl" marker-end="url(#ac)"/>
 <text x="1375" y="523" class="m" font-size="9" text-anchor="end" fill="#111">obuf_wr_addr</text>
@@ -155,15 +151,4 @@
 <polyline points="1380,570 1500,570" class="bus" marker-end="url(#ab)"/>
 <line x1="1466" y1="576" x2="1474" y2="564" class="sl"/>
 <text x="1472" y="562" class="m" font-size="8" text-anchor="middle" fill="#111">32</text>
-<rect x="270" y="770" width="300" height="84" class="leg" rx="0"/>
-<polyline points="284,792 340,792" class="bus" marker-end="url(#ab)"/>
-<line x1="308" y1="798" x2="316" y2="786" class="sl"/>
-<text x="314" y="784" class="m" font-size="8" text-anchor="middle" fill="#111">n</text>
-<text x="352" y="796" class="s" font-size="9" text-anchor="start" fill="#111">data bus, n bits</text>
-<polyline points="284,814 340,814" class="ctl" marker-end="url(#ac)"/>
-<text x="352" y="818" class="s" font-size="9" text-anchor="start" fill="#111">control, 1 bit</text>
-<polyline points="284,836 340,836" class="ctl"/>
-<polyline points="312,828 312,844" class="ctl"/>
-<circle cx="312" cy="836" r="3" fill="#111"/>
-<text x="352" y="840" class="s" font-size="9" text-anchor="start" fill="#111">junction (crossing without dot = no connection)</text>
 </svg>

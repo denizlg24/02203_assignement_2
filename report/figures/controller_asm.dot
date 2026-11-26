@@ -1,143 +1,71 @@
 digraph controller_asm {
-    graph [
-        bgcolor="white",
-        splines=true,
-        outputorder=nodesfirst,
-        pad=0.2,
-        rankdir=TB,
-        nodesep=0.45,
-        ranksep=0.55
-    ];
-
-    node [
-        fontname="Helvetica",
-        fontsize=11,
-        fixedsize=false
-    ];
-
-    edge [
-        fontname="Helvetica",
-        fontsize=10,
-        arrowsize=0.7
-    ];
-
-    // ASM state boxes
-    s0 [
-        shape=rect,
-        label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="2">
-            <TR><TD><B>IDLE (0)</B></TD></TR>
-            <HR/>
-            <TR><TD>r &lt;= 0</TD></TR>
-            <TR><TD>k &lt;= 0</TD></TR>
-        </TABLE>>
-    ];
-
-    s1 [
-        shape=rect,
-        label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="2">
-            <TR><TD><B>LOAD_1 (2)</B></TD></TR>
-            <HR/>
-            <TR><TD>load_en = 1</TD></TR>
-            <TR><TD>row_sel = 0</TD></TR>
-            <TR><TD>init = (k == 0)</TD></TR>
-        </TABLE>>
-    ];
-
-    s2 [
-        shape=rect,
-        label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="2">
-            <TR><TD><B>LOAD_2 (2)</B></TD></TR>
-            <HR/>
-            <TR><TD>row_sel = 1</TD></TR>
-        </TABLE>>
-    ];
-
-    s3 [
-        shape=rect,
-        label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="2">
-            <TR><TD><B>LOAD_3 (2)</B></TD></TR>
-            <HR/>
-            <TR><TD>row_sel = 2</TD></TR>
-        </TABLE>>
-    ];
-
-    s4 [
-        shape=rect,
-        label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="2">
-            <TR><TD><B>WAIT (3)</B></TD></TR>
-            <HR/>
-            <TR><TD>load_en = 0</TD></TR>
-        </TABLE>>
-    ];
-
-    s5 [
-        shape=rect,
-        label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="2">
-            <TR><TD><B>COMP_2 (4)</B></TD></TR>
-            <HR/>
-            <TR><TD>first = 1</TD></TR>
-            <TR><TD>k &lt;= k + 1</TD></TR>
-        </TABLE>>
-    ];
-
-    s6 [
-        shape=rect,
-        label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="2">
-            <TR><TD><B>COMP_4 (5)</B></TD></TR>
-            <HR/>
-            <TR><TD>write = 1</TD></TR>
-            <TR><TD>k &lt;= k + 1</TD></TR>
-        </TABLE>>
-    ];
-
-    s7 [
-        shape=rect,
-        label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="2">
-            <TR><TD><B>NEXT_ROW (6)</B></TD></TR>
-            <HR/>
-            <TR><TD>flush = 1</TD></TR>
-            <TR><TD>r &lt;= r + 1</TD></TR>
-            <TR><TD>k &lt;= 0</TD></TR>
-        </TABLE>>
-    ];
-
-    s8 [
-        shape=rect,
-        label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="2">
-            <TR><TD><B>DONE (8)</B></TD></TR>
-            <HR/>
-            <TR><TD>finish = 1</TD></TR>
-        </TABLE>>
-    ];
-
-    // ASM decision boxes
-    d0 [shape=diamond, label="start"];
-    d1 [shape=diamond, label="k == 0"];
-    d2 [shape=diamond, label="k == 87"];
-    d3 [shape=diamond, label="r == 286"];
-
-    // State transitions and decisions
-    s0 -> d0;
-    d0 -> s0 [label="0"];
-    d0 -> s1 [label="1"];
-
+    graph [bgcolor="white", rankdir=TB, splines=ortho, pad=0.25, nodesep=0.45, ranksep=0.5];
+    node [fontname="Helvetica", fontsize=11, margin="0.14,0.09"];
+    edge [fontname="Helvetica", fontsize=10, arrowsize=0.7];
+    s0 [shape=box, label=<<B>IDLE (0)</B><BR/>r &lt;= 0; k &lt;= 0<BR ALIGN="LEFT"/>>];
+    s1 [shape=box, label=<<B>LOAD_1 (1)</B><BR/>load_en = 1; row_sel = 0<BR ALIGN="LEFT"/>init = (k == 0)<BR ALIGN="LEFT"/>>];
+    s2 [shape=box, label=<<B>LOAD_2 (2)</B><BR/>load_en = 1; row_sel = 1<BR ALIGN="LEFT"/>init = (k == 0)<BR ALIGN="LEFT"/>>];
+    s3 [shape=box, label=<<B>LOAD_3 (3)</B><BR/>load_en = 1; row_sel = 2<BR ALIGN="LEFT"/>init = (k == 0)<BR ALIGN="LEFT"/>>];
+    s4 [shape=box, label=<<B>_WAIT (4)</B>>];
+    s5 [shape=box, label=<<B>COMP_2 (5)</B><BR/>first = 1; k &lt;= k + 1<BR ALIGN="LEFT"/>>];
+    s6 [shape=box, label=<<B>COMP_4 (6)</B><BR/>write = 1; k &lt;= k + 1<BR ALIGN="LEFT"/>>];
+    s7 [shape=box, label=<<B>NEXT_ROW (7)</B><BR/>flush = 1; k &lt;= 0; r &lt;= r + 1<BR ALIGN="LEFT"/>>];
+    s8 [shape=box, label=<<B>DONE (8)</B><BR/>finish = 1<BR ALIGN="LEFT"/>>];
+    start [shape=diamond, label=<<B>start?</B>>];
+    first_group [shape=diamond, label=<<B>k == 0?</B>>];
+    last_word [shape=diamond, label=<<B>k == W-1?</B>>];
+    last_row [shape=diamond, label=<<B>r == H-3?</B>>];
+    s0 -> start;
+    start -> s0 [xlabel="start = 0", constraint=false];
+    start -> s1 [xlabel="start = 1"];
     s1 -> s2;
     s2 -> s3;
     s3 -> s4;
-
-    s4 -> d1;
-    d1 -> s5 [label="1"];
-    d1 -> s6 [label="0"];
-
-    s5 -> s1;
-
-    s6 -> d2;
-    d2 -> s7 [label="1"];
-    d2 -> s1 [label="0"];
-
-    s7 -> d3;
-    d3 -> s8 [label="1"];
-    d3 -> s1 [label="0"];
-
-    s8 -> s0;
+    s4 -> first_group;
+    first_group -> s5 [xlabel="1"];
+    first_group -> s6 [xlabel="0"];
+    s5 -> s1 [constraint=false];
+    s6 -> last_word;
+    last_word -> s7 [xlabel="1"];
+    last_word -> s1 [xlabel="0", constraint=false];
+    s7 -> last_row;
+    last_row -> s8 [xlabel="1"];
+    last_row -> s1 [xlabel="0", constraint=false];
+    s8 -> s0 [constraint=false];
+    subgraph cluster_idle {
+        graph [style=dashed, color="#666666", penwidth=1, margin=18, label=""];
+        s0; start;
+    }
+    subgraph cluster_load_1 {
+        graph [style=dashed, color="#666666", penwidth=1, margin=18, label=""];
+        s1;
+    }
+    subgraph cluster_load_2 {
+        graph [style=dashed, color="#666666", penwidth=1, margin=18, label=""];
+        s2;
+    }
+    subgraph cluster_load_3 {
+        graph [style=dashed, color="#666666", penwidth=1, margin=18, label=""];
+        s3;
+    }
+    subgraph cluster_wait {
+        graph [style=dashed, color="#666666", penwidth=1, margin=18, label=""];
+        s4; first_group;
+    }
+    subgraph cluster_comp_2 {
+        graph [style=dashed, color="#666666", penwidth=1, margin=18, label=""];
+        s5;
+    }
+    subgraph cluster_comp_4 {
+        graph [style=dashed, color="#666666", penwidth=1, margin=18, label=""];
+        s6; last_word;
+    }
+    subgraph cluster_next_row {
+        graph [style=dashed, color="#666666", penwidth=1, margin=18, label=""];
+        s7; last_row;
+    }
+    subgraph cluster_done {
+        graph [style=dashed, color="#666666", penwidth=1, margin=18, label=""];
+        s8;
+    }
 }

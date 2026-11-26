@@ -1,31 +1,29 @@
 digraph controller_fsm {
-    graph [bgcolor="white", splines=true, outputorder=nodesfirst, pad=0.2];
-    node [shape=rect, fixedsize=false, width=1.5, fontname="Helvetica", fontsize=11];
+    graph [bgcolor="white", rankdir=TB, pad=0.25, nodesep=0.45, ranksep=0.5];
+    node [fontname="Helvetica", fontsize=11, margin="0.14,0.09"];
     edge [fontname="Helvetica", fontsize=10, arrowsize=0.7];
-
-    // Moore outputs (=) and register transfers (<=) below the divider
-    s0 [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="2"><TR><TD><B>0: idle</B></TD></TR><HR/><TR><TD>r &lt;= 0, k &lt;= 0</TD></TR></TABLE>>];
-    s1 [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="2"><TR><TD><B>2: load_1</B></TD></TR><HR/><TR><TD>load_en = 1<BR/>row_sel = 0<BR/>init = (k == 0)</TD></TR></TABLE>>];
-    s2 [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="2"><TR><TD><B>2: load_2</B></TD></TR><HR/><TR><TD>row_sel = 1<BR/></TD></TR></TABLE>>];
-    s3 [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="2"><TR><TD><B>2: load_3</B></TD></TR><HR/><TR><TD>row_sel = 2<BR/></TD></TR></TABLE>>];
-    s4 [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="2"><TR><TD><B>3: wait</B></TD></TR><HR/><TR><TD>load_en = 0</TD></TR></TABLE>>];
-    s5 [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="2"><TR><TD><B>4: comp_2</B></TD></TR><HR/><TR><TD>first = 1<BR/>k &lt;= k + 1</TD></TR></TABLE>>];
-    s6 [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="2"><TR><TD><B>5: comp_4</B></TD></TR><HR/><TR><TD>write = 1<BR/>k &lt;= k + 1</TD></TR></TABLE>>];
-    s7 [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="2"><TR><TD><B>6: next_row</B></TD></TR><HR/><TR><TD>flush = 1<BR/>r &lt;= r + 1, k &lt;= 0</TD></TR></TABLE>>];
-    s8 [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="2"><TR><TD><B>8: done</B></TD></TR><HR/><TR><TD>finish = 1</TD></TR></TABLE>>];
-    note0 [shape=box, fixedsize=false, style=dashed, fontsize=10, fontname="Courier", margin="0.15,0.1", label="k  : word index, counts mod 88 (87 -> 0)\lr  : centre row 1..286\lload -> wait -> comp = 5 cycles per group:\lthe bottom word is read in the last load\lcycle and captured by the loader in wait,\lso the window is stable in comp_2/comp_4.\l"];
+    s0 [shape=box, label=<<B>IDLE (0)</B><BR/>r &lt;= 0; k &lt;= 0<BR ALIGN="LEFT"/>>];
+    s1 [shape=box, label=<<B>LOAD_1 (1)</B><BR/>load_en = 1; row_sel = 0<BR ALIGN="LEFT"/>init = (k == 0)<BR ALIGN="LEFT"/>>];
+    s2 [shape=box, label=<<B>LOAD_2 (2)</B><BR/>load_en = 1; row_sel = 1<BR ALIGN="LEFT"/>init = (k == 0)<BR ALIGN="LEFT"/>>];
+    s3 [shape=box, label=<<B>LOAD_3 (3)</B><BR/>load_en = 1; row_sel = 2<BR ALIGN="LEFT"/>init = (k == 0)<BR ALIGN="LEFT"/>>];
+    s4 [shape=box, label=<<B>_WAIT (4)</B>>];
+    s5 [shape=box, label=<<B>COMP_2 (5)</B><BR/>first = 1; k &lt;= k + 1<BR ALIGN="LEFT"/>>];
+    s6 [shape=box, label=<<B>COMP_4 (6)</B><BR/>write = 1; k &lt;= k + 1<BR ALIGN="LEFT"/>>];
+    s7 [shape=box, label=<<B>NEXT_ROW (7)</B><BR/>flush = 1; k &lt;= 0; r &lt;= r + 1<BR ALIGN="LEFT"/>>];
+    s8 [shape=box, label=<<B>DONE (8)</B><BR/>finish = 1<BR ALIGN="LEFT"/>>];
+    reset [shape=plaintext, label=<<B>rst_n = 0</B>>];
+    reset -> s0;
     s0 -> s0 [label="start = 0"];
     s0 -> s1 [label="start = 1"];
     s1 -> s2;
     s2 -> s3;
     s3 -> s4;
-    s4 -> s5 [label="k = 0"];
-    s5 -> s1;
+    s4 -> s5 [label="k == 0"];
     s4 -> s6 [label="k != 0"];
-    s6 -> s7 [label="k = 87"];
-    s6 -> s1;
-    s7 -> s8 [label="r = 286"];
-    s7 -> s1;
+    s5 -> s1;
+    s6 -> s7 [label="k == W-1"];
+    s6 -> s1 [label="k != W-1"];
+    s7 -> s8 [label="r == H-3"];
+    s7 -> s1 [label="r != H-3"];
     s8 -> s0;
-    
 }
